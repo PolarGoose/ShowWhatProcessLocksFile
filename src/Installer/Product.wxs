@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="ShowWhatProcessLocksFile" Language="1033" Version="$(var.InstallerVersion)" Manufacturer="PolarGoose" UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="ShowWhatProcessLocksFile" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="ShowWhatProcessLocksFile" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent" Guid="18A44A77-A0C6-4CE7-9CE5-88ECBEF62B14">
+        <File Source="$(var.TargetDir)net461\ShowWhatProcessLocksFile.exe" />
+        <File Source="$(var.TargetDir)net461\ShowWhatProcessLocksFile.exe.config" />
+        <File Source="$(var.TargetDir)net461\handle.exe" />
+        <File Source="$(var.TargetDir)net461\CliWrap.dll" />
+        <File Source="$(var.TargetDir)net461\Microsoft.Bcl.AsyncInterfaces.dll" />
+        <File Source="$(var.TargetDir)net461\System.Buffers.dll" />
+        <File Source="$(var.TargetDir)net461\System.Runtime.CompilerServices.Unsafe.dll" />
+        <File Source="$(var.TargetDir)net461\System.Runtime.InteropServices.RuntimeInformation.dll" />
+        <File Source="$(var.TargetDir)net461\System.Threading.Tasks.Extensions.dll" />
+        <File Source="$(var.TargetDir)net461\System.ValueTuple.dll" />
+        <File Source="$(var.TargetDir)net461\MoreLinq.dll" />
+
+        <RegistryKey Root="HKCR"
+                     Key="*\shell\ShowWhatProcessLocksFile">
+          <RegistryValue Type="string" Value="Show what locks this file" />
+          <RegistryKey Key="command">
+              <RegistryValue Type="string" Value="&quot;C:\Program Files\ShowWhatProcessLocksFile\ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+        </RegistryKey>
+
+        <RegistryKey Root="HKCR"
+                     Key="Directory\shell\ShowWhatProcessLocksFile">
+          <RegistryValue Type="string" Value="Show what locks this folder" />
+          <RegistryKey Key="command">
+              <RegistryValue Type="string" Value="&quot;C:\Program Files\ShowWhatProcessLocksFile\ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

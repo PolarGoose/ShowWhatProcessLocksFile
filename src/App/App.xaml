@@ -1,0 +1,16 @@
+<Application x:Class="ShowWhatProcessLocksFile.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:ShowWhatProcessLocksFile.Gui.Controls"
+             StartupUri="Gui/MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="ButtonStyle" TargetType="ButtonBase">
+            <Style.Setters>
+                <Setter Property="Background" Value="White"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}"/>
+        <Style TargetType="ToggleButton" BasedOn="{StaticResource ButtonStyle}"/>
+        <Style TargetType="controls:IconButton" BasedOn="{StaticResource ButtonStyle}"/>
+    </Application.Resources>
+</Application>

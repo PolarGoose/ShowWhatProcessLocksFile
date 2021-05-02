@@ -1,0 +1,19 @@
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: .github/workflows/build.ps1
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: true
+          files: Build/Release/*.msi
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build artifacts
+          path: Build/Release/*.msi

@@ -1,0 +1,37 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowWhatProcessLocksFile", "src\App\ShowWhatProcessLocksFile.csproj", "{952F82E5-8372-4435-8318-3ED0C114A57C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "src\Test\Test.csproj", "{19D889E7-E728-4BFF-A68E-5445454F4417}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "src\Installer\Installer.wixproj", "{8D8AB22B-5677-4A21-B25F-75F2409248EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{952F82E5-8372-4435-8318-3ED0C114A57C}.Debug|x64.ActiveCfg = Debug|x64
+		{952F82E5-8372-4435-8318-3ED0C114A57C}.Debug|x64.Build.0 = Debug|x64
+		{952F82E5-8372-4435-8318-3ED0C114A57C}.Release|x64.ActiveCfg = Release|x64
+		{952F82E5-8372-4435-8318-3ED0C114A57C}.Release|x64.Build.0 = Release|x64
+		{19D889E7-E728-4BFF-A68E-5445454F4417}.Debug|x64.ActiveCfg = Debug|x64
+		{19D889E7-E728-4BFF-A68E-5445454F4417}.Debug|x64.Build.0 = Debug|x64
+		{19D889E7-E728-4BFF-A68E-5445454F4417}.Release|x64.ActiveCfg = Release|x64
+		{19D889E7-E728-4BFF-A68E-5445454F4417}.Release|x64.Build.0 = Release|x64
+		{8D8AB22B-5677-4A21-B25F-75F2409248EC}.Debug|x64.ActiveCfg = Debug|x64
+		{8D8AB22B-5677-4A21-B25F-75F2409248EC}.Debug|x64.Build.0 = Debug|x64
+		{8D8AB22B-5677-4A21-B25F-75F2409248EC}.Release|x64.ActiveCfg = Release|x64
+		{8D8AB22B-5677-4A21-B25F-75F2409248EC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EC8A0FC-4940-44BF-A173-44FEEDFFDD20}
+	EndGlobalSection
+EndGlobal
