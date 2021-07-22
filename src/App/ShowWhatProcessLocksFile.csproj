@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net461</TargetFramework>
@@ -14,11 +14,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-
-  <Target Name="DownloadHandleExe" BeforeTargets="BeforeBuild" Condition="!Exists('$(OutDir)handle.exe')">
-      <Exec Command="PowerShell -NonInteractive -ExecutionPolicy Unrestricted -Command &quot;&amp; { &amp;&apos;$(MSBuildThisFileDirectory)DownloadHandleExe.ps1&apos; &apos;$(OutDir)&apos; } &quot;" />
-  </Target>
-
+    
   <ItemGroup>
     <PackageReference Include="CliWrap" Version="3.3.2" />
     <PackageReference Include="morelinq" Version="3.3.2" />
@@ -33,4 +29,16 @@
     <Resource Include="Gui\Icons\Refresh_16x.png" />
     <Resource Include="Gui\Icons\StatusCriticalError_16x.png" />
   </ItemGroup>
+
+  <!-- Download handle.exe and unpack it -->
+  <Target Name="DownloadHandleExe" BeforeTargets="BeforeBuild" Condition="!Exists('$(BuildFolder)handle.zip')">
+    <Message Text="Download handle from the web"/>
+    <Exec Command="PowerShell -NonInteractive -ExecutionPolicy Unrestricted -Command ^
+      &quot; Invoke-WebRequest -Uri https://download.sysinternals.com/files/Handle.zip -OutFile '$(BuildFolder)handle.zip' &quot;" />
+  </Target>
+  <Target Name="UnpackHandleExe" AfterTargets="DownloadHandleExe" BeforeTargets="BeforeBuild" Condition="!Exists('$(OutDir)handle.exe')">
+    <Message Text="Unpack handle.zip"/>
+    <Exec Command="PowerShell -NonInteractive -ExecutionPolicy Unrestricted -Command ^
+      &quot; Expand-Archive '$(BuildFolder)handle.zip' '$(OutDir)' &quot;" />
+  </Target>
 </Project>

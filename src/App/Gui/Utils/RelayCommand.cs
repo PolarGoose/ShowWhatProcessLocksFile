@@ -37,7 +37,7 @@ namespace ShowWhatProcessLocksFile.Gui.Utils
             methodToExecute();
         }
 
-        public void Refresh()
+        public static void Refresh()
         {
             CommandManager.InvalidateRequerySuggested();
         }
@@ -77,7 +77,7 @@ namespace ShowWhatProcessLocksFile.Gui.Utils
             methodToExecute((T)parameter);
         }
 
-        public void Refresh()
+        public static void Refresh()
         {
             CommandManager.InvalidateRequerySuggested();
         }

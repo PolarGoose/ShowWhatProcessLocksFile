@@ -26,6 +26,7 @@ namespace ShowWhatProcessLocksFile.Gui
             {
                 mainControl = value;
                 OnPropertyChanged();
+                RelayCommand.Refresh();
             }
         }
 
