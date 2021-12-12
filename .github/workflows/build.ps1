@@ -52,21 +52,24 @@ Function FindMsBuild() {
     return $msbuild
 }
 
+Function RemoveFileIfExists($fileName) {
+    Info "Remove '$fileName'"
+    Remove-Item $fileName  -Force  -Recurse -ErrorAction SilentlyContinue
+}
+
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $root = Resolve-Path "$PSScriptRoot/../.."
-$publishDir = "$root/build/Release"
+$buildDir = "$root/build"
+$publishDir = "$buildDir/Release"
 $projectName = "ShowWhatProcessLocksFile"
 $version = GetVersion
 $installerVersion = GetInstallerVersion $version
 $msbuild = FindMsBuild
 
 Info "Version: '$version'. InstallerVersion: '$installerVersion'"
-
-Info "Remove Publish directory `n $publishDir"
-Remove-Item $publishDir  -Force  -Recurse -ErrorAction SilentlyContinue
 
 Info "Build project"
 & $msbuild `
@@ -80,10 +83,18 @@ Info "Build project"
     $root/$projectName.sln
 CheckReturnCodeOfPreviousCommand "build failed"
 
-# TODO: there are no processes which lock files on Github Actions executors. It makes a lot of test fail.
-# Info "Run tests"
-# & "$root/build/nuget/nunit.consolerunner/*/tools/nunit3-console.exe" `
-#     $publishDir/net461/Test.dll `
-#     --stoponerror `
-#     --noresult
-# CheckReturnCodeOfPreviousCommand "tests failed"
+RemoveFileIfExists "$publishDir/${projectName}.msi.zip"
+Info "Create zip archive from msi installer"
+Compress-Archive -Path "$publishDir/$projectName.msi" -DestinationPath "$publishDir/${projectName}.msi.zip"
+
+# Skip running tests if the build script is run on Github Actions.
+# There are no processes which lock files on Github Actions executors. It makes a lot of test fail.
+if ($null -eq $env:GITHUB_ACTIONS) {
+    & "$buildDir/nuget/nunit.consolerunner/*/tools/nunit3-console.exe" `
+           "$publishDir/net461/Test.dll" `
+           --stoponerror `
+           --labels=Before `
+           --noheader `
+           --noresult
+    CheckReturnCodeOfPreviousCommand "tests failed"
+}

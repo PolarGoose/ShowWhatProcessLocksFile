@@ -7,6 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>ShowWhatProcessLocksFile</OutputName>
     <OutputType>Package</OutputType>
+    <SuppressValidation>True</SuppressValidation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>

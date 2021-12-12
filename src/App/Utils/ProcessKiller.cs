@@ -1,4 +1,4 @@
-using ShowWhatProcessLocksFile.LockingProcessesInfo;
+using ShowWhatProcessLocksFile.LockFinding;
 using System;
 using System.Collections.Generic;
 

@@ -3,7 +3,7 @@ using CliWrap.Buffered;
 using ShowWhatProcessLocksFile.Utils;
 using System;
 
-namespace ShowWhatProcessLocksFile.LockingProcessesInfo.HandleExe
+namespace ShowWhatProcessLocksFile.LockFinding.HandleExe
 {
     public static class CommandLine
     {

@@ -12,8 +12,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          files: Build/Release/*.msi
+          files: Build/Release/*.msi.zip
       - uses: actions/upload-artifact@v2
         with:
           name: Build artifacts
-          path: Build/Release/*.msi
+          path: Build/Release/*.msi.zip

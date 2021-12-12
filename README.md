@@ -1,7 +1,10 @@
 # ShowWhatProcessLocksFile
 An utility to discover what processes lock a specific file or folder.<br>
+
+# Screenshots
+## Context menu
 ![Screenshot](doc/ContextMenu.png)
-<br>
+## The application
 ![Screenshot](doc/Screenshot.png)
 
 # System requirements
@@ -12,8 +15,8 @@ An utility to discover what processes lock a specific file or folder.<br>
 The application uses [Handle by Mark Russinovich](https://docs.microsoft.com/en-us/sysinternals/downloads/handle) to get information about locking processes. The output of `handle.exe` is parsed and displayed in the GUI.<br>
 
 # How to use
-* Download `ShowWhatProcessLocksFile.msi` from the latest [release](https://github.com/PolarGoose/ShowWhatProcessLocksFile/releases).
-* Run the installer. The installer will install this programm to the `C:\Program Files\ShowWhatProcessLocksFile` folder and add a "Show what locks this file" Windows File Explorer context menu element.
+* Download `ShowWhatProcessLocksFile.msi.zip` from the latest [release](https://github.com/PolarGoose/ShowWhatProcessLocksFile/releases).
+* Run the installer. The installer will install this programm to the `%AppData%\ShowWhatProcessLocksFile` folder and add a "Show what locks this file" Windows File Explorer context menu element.
 * Use "Show what locks this file" File Explorer's context menu to select a file or folder
 * To terminate selected processes, open a context menu by clicking mouse right button
 * If you want to uninstall the program, use `Control Panel\Programs\Programs and Features`, uninstaller will remove an integration with the context menu and all files which were installed.

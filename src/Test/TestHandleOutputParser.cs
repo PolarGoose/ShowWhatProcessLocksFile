@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using ShowWhatProcessLocksFile.LockingProcessesInfo.HandleExe;
+using ShowWhatProcessLocksFile.LockFinding.HandleExe;
 using System;
 using System.IO;
 using System.Linq;

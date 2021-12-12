@@ -7,7 +7,7 @@ namespace ShowWhatProcessLocksFile.Utils
     {
         public static string GetFileFullName()
         {
-            string[] args = Environment.GetCommandLineArgs();
+            var args = Environment.GetCommandLineArgs();
 
             if (args.Length == 1)
             {

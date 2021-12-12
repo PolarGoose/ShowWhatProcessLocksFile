@@ -1,4 +1,4 @@
-using ShowWhatProcessLocksFile.LockingProcessesInfo;
+using ShowWhatProcessLocksFile.LockFinding;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls
 {

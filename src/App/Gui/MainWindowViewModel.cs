@@ -1,6 +1,6 @@
 using ShowWhatProcessLocksFile.Gui.Controls;
 using ShowWhatProcessLocksFile.Gui.Utils;
-using ShowWhatProcessLocksFile.LockingProcessesInfo;
+using ShowWhatProcessLocksFile.LockFinding;
 using ShowWhatProcessLocksFile.Utils;
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace ShowWhatProcessLocksFile.Gui
 
             try
             {
-                var res = await Task.Run(() => ProcessesInfoRetriever.GetProcessesInfo(FilePath));
+                var res = await Task.Run(() => LockFinder.FindWhatProcessesLockPath(FilePath).ToList());
                 if (res.Any())
                 {
                     MainControl = new ProcessInfoListViewModel(res, OnProcessesKillRequested);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" Name="ShowWhatProcessLocksFile" Language="1033" Version="$(var.InstallerVersion)" Manufacturer="PolarGoose" UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
     <Feature Id="ProductFeature" Title="ShowWhatProcessLocksFile" Level="1">
@@ -13,7 +13,7 @@
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFiles64Folder">
+      <Directory Id="AppDataFolder">
         <Directory Id="INSTALLFOLDER" Name="ShowWhatProcessLocksFile" />
       </Directory>
     </Directory>
@@ -26,27 +26,38 @@
         <File Source="$(var.TargetDir)net461\ShowWhatProcessLocksFile.exe.config" />
         <File Source="$(var.TargetDir)net461\handle.exe" />
         <File Source="$(var.TargetDir)net461\CliWrap.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Converters.Wpf.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Rendering.Gdi.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Rendering.Wpf.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Model.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Css.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Dom.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Runtime.Wpf.dll" />
+        <File Source="$(var.TargetDir)net461\SharpVectors.Core.dll" />
         <File Source="$(var.TargetDir)net461\Microsoft.Bcl.AsyncInterfaces.dll" />
         <File Source="$(var.TargetDir)net461\System.Buffers.dll" />
-        <File Source="$(var.TargetDir)net461\System.Runtime.CompilerServices.Unsafe.dll" />
-        <File Source="$(var.TargetDir)net461\System.Runtime.InteropServices.RuntimeInformation.dll" />
         <File Source="$(var.TargetDir)net461\System.Threading.Tasks.Extensions.dll" />
-        <File Source="$(var.TargetDir)net461\System.ValueTuple.dll" />
+        <File Source="$(var.TargetDir)net461\System.Runtime.CompilerServices.Unsafe.dll" />
         <File Source="$(var.TargetDir)net461\MoreLinq.dll" />
+        <File Source="$(var.TargetDir)net461\System.ValueTuple.dll" />
+        <File Source="$(var.TargetDir)net461\System.Runtime.InteropServices.RuntimeInformation.dll" />
 
-        <RegistryKey Root="HKCR"
-                     Key="*\shell\ShowWhatProcessLocksFile">
+        <!-- https://stackoverflow.com/a/29769228/7585517 -->
+        <RegistryKey Root="HKCU"
+                     Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this file" />
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;" />
           <RegistryKey Key="command">
-              <RegistryValue Type="string" Value="&quot;C:\Program Files\ShowWhatProcessLocksFile\ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
+              <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
           </RegistryKey>
         </RegistryKey>
 
-        <RegistryKey Root="HKCR"
-                     Key="Directory\shell\ShowWhatProcessLocksFile">
+        <RegistryKey Root="HKCU"
+                     Key="Software\Classes\Directory\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this folder" />
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;" />
           <RegistryKey Key="command">
-              <RegistryValue Type="string" Value="&quot;C:\Program Files\ShowWhatProcessLocksFile\ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
+              <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
           </RegistryKey>
         </RegistryKey>
       </Component>

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace ShowWhatProcessLocksFile.LockingProcessesInfo.HandleExe
+namespace ShowWhatProcessLocksFile.LockFinding.HandleExe
 {
     public class HandleOutputParser
     {

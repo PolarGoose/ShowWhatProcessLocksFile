@@ -4,6 +4,7 @@
         <BuildFolder>$(ProjectRoot)build\</BuildFolder>
         <OutputPath>$(BuildFolder)$(Configuration)</OutputPath>
         <BaseIntermediateOutputPath>$(BuildFolder)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+        <Platforms>x64</Platforms>
         <WarningLevel>5</WarningLevel>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <Version>0.0-dev</Version>

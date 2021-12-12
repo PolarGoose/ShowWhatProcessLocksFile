@@ -1,4 +1,4 @@
-namespace ShowWhatProcessLocksFile.LockingProcessesInfo.HandleExe
+namespace ShowWhatProcessLocksFile.LockFinding.HandleExe
 {
     public enum HandleType
     {

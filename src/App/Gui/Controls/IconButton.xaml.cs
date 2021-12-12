@@ -1,19 +1,19 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls
 {
     public partial class IconButton : Button
     {
-        public ImageSource Icon
+        public Uri Icon
         {
-            get => (ImageSource)GetValue(IconProperty);
+            get => (Uri)GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(IconButton));
+            DependencyProperty.Register("Icon", typeof(Uri), typeof(IconButton));
 
         public IconButton()
         {

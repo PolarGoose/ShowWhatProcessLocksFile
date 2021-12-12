@@ -14,8 +14,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <local:IconButton Height="21" Width="21" Margin="2" Command="{Binding ExpandAllCommand}" Icon="/Gui/Icons/ExpandAll_16x.png" ToolTip="Expand All"/>
-            <local:IconButton Height="21" Width="21" Margin="2" Command="{Binding CollapseAllCommand}" Icon="/Gui/Icons/CollapseAll_16x.png" ToolTip="Collapse All"/>
+            <local:IconButton Height="21" Width="21" Margin="2" Command="{Binding ExpandAllCommand}" Icon="/Gui/Icons/ExpandAll_16x.svg" ToolTip="Expand All"/>
+            <local:IconButton Height="21" Width="21" Margin="2" Command="{Binding CollapseAllCommand}" Icon="/Gui/Icons/CollapseAll_16x.svg" ToolTip="Collapse All"/>
         </StackPanel>
 
         <ListBox x:Name="processInfoList"  Grid.Row="1" SelectionMode="Extended" ItemsSource="{Binding ProcessInfoViewModels}" ScrollViewer.CanContentScroll="False">

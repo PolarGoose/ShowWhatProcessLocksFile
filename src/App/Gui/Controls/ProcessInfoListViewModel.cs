@@ -1,5 +1,5 @@
 using ShowWhatProcessLocksFile.Gui.Utils;
-using ShowWhatProcessLocksFile.LockingProcessesInfo;
+using ShowWhatProcessLocksFile.LockFinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
