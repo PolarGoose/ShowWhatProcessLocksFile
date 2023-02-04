@@ -1,12 +1,11 @@
 using System.Windows.Controls;
 
-namespace ShowWhatProcessLocksFile.Gui.Controls
+namespace ShowWhatProcessLocksFile.Gui.Controls;
+
+public partial class ResultTextView : UserControl
 {
-    public partial class ResultTextView : UserControl
+    public ResultTextView()
     {
-        public ResultTextView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

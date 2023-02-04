@@ -1,22 +1,21 @@
 using System.Diagnostics;
 
-namespace ShowWhatProcessLocksFile.Utils
+namespace ShowWhatProcessLocksFile.Utils;
+
+internal static class Log
 {
-    internal static class Log
+    public static void Info(string msg)
     {
-        public static void Info(string msg)
-        {
-            Debug.WriteLine(msg, "Info");
-        }
+        Debug.WriteLine(msg, "Info");
+    }
 
-        public static void Warn(string msg)
-        {
-            Debug.WriteLine(msg, "Warn");
-        }
+    public static void Warn(string msg)
+    {
+        Debug.WriteLine(msg, "Warn");
+    }
 
-        public static void Error(string msg)
-        {
-            Debug.WriteLine(msg, "Error");
-        }
+    public static void Error(string msg)
+    {
+        Debug.WriteLine(msg, "Error");
     }
 }

@@ -1,25 +1,24 @@
-using ShowWhatProcessLocksFile.Gui.Utils;
-using ShowWhatProcessLocksFile.Utils;
 using System;
 using System.Windows;
+using ShowWhatProcessLocksFile.Gui.Utils;
+using ShowWhatProcessLocksFile.Utils;
 
-namespace ShowWhatProcessLocksFile.Gui
+namespace ShowWhatProcessLocksFile.Gui;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            try
-            {
-                DataContext = new MainWindowViewModel(CommandLineParser.GetFileFullName());
-            }
-            catch (Exception ex)
-            {
-                ErrorDialog.Show($"{ex.Message}");
-                Application.Current.Shutdown();
-            }
+        try
+        {
+            DataContext = new MainWindowViewModel(CommandLineParser.GetFileFullName());
+        }
+        catch (Exception ex)
+        {
+            ErrorDialog.Show($"{ex.Message}");
+            Application.Current.Shutdown();
         }
     }
 }

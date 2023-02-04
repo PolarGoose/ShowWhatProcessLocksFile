@@ -1,12 +1,11 @@
 using System.Windows.Controls;
 
-namespace ShowWhatProcessLocksFile.Gui.Controls
+namespace ShowWhatProcessLocksFile.Gui.Controls;
+
+public partial class ProgressBarWithTextView : UserControl
 {
-    public partial class ProgressBarWithTextView : UserControl
+    public ProgressBarWithTextView()
     {
-        public ProgressBarWithTextView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

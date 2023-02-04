@@ -1,25 +1,16 @@
 <ToggleButton x:Class="ShowWhatProcessLocksFile.Gui.Controls.ExpandToggleButton"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-             mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              mc:Ignorable="d"
+              d:DesignHeight="450" d:DesignWidth="800">
     <ToggleButton.Style>
         <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
-            <Setter Property="Content">
-                <Setter.Value>
-                    <svgc:SvgViewbox Source="/Gui/Icons/ExpandRight_md_16x.svg"/>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Content" Value="{StaticResource ExpandRight_icon}" />
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Content">
-                        <Setter.Value>
-                            <svgc:SvgViewbox Source="/Gui/Icons/ExpandDown_md_16x.svg"/>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Content" Value="{StaticResource ExpandDown_icon}" />
                 </Trigger>
             </Style.Triggers>
         </Style>

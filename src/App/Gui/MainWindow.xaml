@@ -11,30 +11,32 @@
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox Margin="2" Grid.Column="0" IsReadOnly="True" Text="{Binding FilePath, Mode=OneWay}" FontSize="14" Padding="0,2,0,2"/>
-            <controls:IconButton Grid.Column="1" Margin="2" Command="{Binding RefreshCommand}" Icon="/Gui/Icons/Refresh_16x.svg" ToolTip="Refresh"/>
+            <TextBox Margin="2" Grid.Column="0" IsReadOnly="True" Text="{Binding FilePath, Mode=OneWay}" FontSize="14"
+                     Padding="0,2,0,2" />
+            <Button Grid.Column="1" Margin="2" Command="{Binding RefreshCommand}"
+                    Content="{StaticResource Refresh_icon}" ToolTip="Refresh" />
         </Grid>
-        
+
         <ContentControl Grid.Row="1" Content="{Binding MainControl}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type controls:ProcessInfoListViewModel}">
-                    <controls:ProcessInfoListView/>
+                    <controls:ProcessInfoListView />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type controls:ProgressBarWithTextViewModel}">
-                    <controls:ProgressBarWithTextView Height="50" VerticalAlignment="Top"/>
+                    <controls:ProgressBarWithTextView Height="50" VerticalAlignment="Top" />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type controls:ResultTextViewModel}">
-                    <controls:ResultTextView VerticalAlignment="Top"/>
+                    <controls:ResultTextView VerticalAlignment="Top" />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

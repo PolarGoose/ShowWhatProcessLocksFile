@@ -1,12 +1,11 @@
 using System.Windows.Controls.Primitives;
 
-namespace ShowWhatProcessLocksFile.Gui.Controls
+namespace ShowWhatProcessLocksFile.Gui.Controls;
+
+public partial class ExpandToggleButton : ToggleButton
 {
-    public partial class ExpandToggleButton : ToggleButton
+    public ExpandToggleButton()
     {
-        public ExpandToggleButton()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

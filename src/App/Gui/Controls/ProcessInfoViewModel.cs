@@ -1,25 +1,26 @@
+using ShowWhatProcessLocksFile.Gui.Utils;
 using ShowWhatProcessLocksFile.LockFinding;
 
-namespace ShowWhatProcessLocksFile.Gui.Controls
+namespace ShowWhatProcessLocksFile.Gui.Controls;
+
+internal class ProcessInfoViewModel : ViewModelBase
 {
-    internal class ProcessInfoViewModel : ViewModelBase
+    public ProcessInfo Process { get; }
+
+    private bool isExpanded;
+
+    public bool IsExpanded
     {
-        public ProcessInfo Process { get; }
-
-        private bool isExpanded = false;
-        public bool IsExpanded
+        get => isExpanded;
+        set
         {
-            get => isExpanded;
-            set
-            {
-                isExpanded = value;
-                OnPropertyChanged();
-            }
+            isExpanded = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ProcessInfoViewModel(ProcessInfo process)
-        {
-            Process = process;
-        }
+    public ProcessInfoViewModel(ProcessInfo process)
+    {
+        Process = process;
     }
 }

@@ -1,12 +1,11 @@
 using System.Windows.Controls;
 
-namespace ShowWhatProcessLocksFile.Gui.Controls
+namespace ShowWhatProcessLocksFile.Gui.Controls;
+
+public partial class ProcessInfoListView : UserControl
 {
-    public partial class ProcessInfoListView : UserControl
+    public ProcessInfoListView()
     {
-        public ProcessInfoListView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,50 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="ShowWhatProcessLocksFile" Language="1033" Version="$(var.InstallerVersion)" Manufacturer="PolarGoose" UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
-
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="ShowWhatProcessLocksFile" Language="1033" Version="$(var.InstallerVersion)" Manufacturer="PolarGoose" UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb" InstallerVersion="200" Scope="perUser">
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
-
     <Feature Id="ProductFeature" Title="ShowWhatProcessLocksFile" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
-  </Product>
-
+  </Package>
   <Fragment>
-    <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="AppDataFolder">
-        <Directory Id="INSTALLFOLDER" Name="ShowWhatProcessLocksFile" />
-      </Directory>
-    </Directory>
+    <StandardDirectory Id="AppDataFolder">
+      <Directory Id="INSTALLFOLDER" Name="ShowWhatProcessLocksFile" />
+    </StandardDirectory>
   </Fragment>
-
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent" Guid="18A44A77-A0C6-4CE7-9CE5-88ECBEF62B14">
-        <File Source="$(var.TargetDir)net461\ShowWhatProcessLocksFile.exe" />
-        <File Source="$(var.TargetDir)net461\ShowWhatProcessLocksFile.exe.config" />
-        <File Source="$(var.TargetDir)net461\handle.exe" />
-        <File Source="$(var.TargetDir)net461\CliWrap.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Converters.Wpf.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Rendering.Gdi.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Rendering.Wpf.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Model.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Css.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Dom.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Runtime.Wpf.dll" />
-        <File Source="$(var.TargetDir)net461\SharpVectors.Core.dll" />
-        <File Source="$(var.TargetDir)net461\Microsoft.Bcl.AsyncInterfaces.dll" />
-        <File Source="$(var.TargetDir)net461\System.Buffers.dll" />
-        <File Source="$(var.TargetDir)net461\System.Threading.Tasks.Extensions.dll" />
-        <File Source="$(var.TargetDir)net461\System.Runtime.CompilerServices.Unsafe.dll" />
-        <File Source="$(var.TargetDir)net461\MoreLinq.dll" />
-        <File Source="$(var.TargetDir)net461\System.ValueTuple.dll" />
-        <File Source="$(var.TargetDir)net461\System.Runtime.InteropServices.RuntimeInformation.dll" />
+        <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.TargetDir)net462\ShowWhatProcessLocksFile.exe" />
+        <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.TargetDir)net462\ShowWhatProcessLocksFile.exe.config" />
+        <File Id="Handle2.exe" Source="$(var.TargetDir)net462\Handle2.exe" />
+        <File Id="CliWrap.dll" Source="$(var.TargetDir)net462\CliWrap.dll" />
+        <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.TargetDir)net462\Microsoft.Bcl.AsyncInterfaces.dll" />
+        <File Id="System.Memory.dll" Source="$(var.TargetDir)net462\System.Memory.dll" />
+        <File Id="System.Buffers.dll" Source="$(var.TargetDir)net462\System.Buffers.dll" />
+        <File Id="System.Threading.Tasks.Extensions.dll" Source="$(var.TargetDir)net462\System.Threading.Tasks.Extensions.dll" />
+        <File Id="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.TargetDir)net462\System.Runtime.CompilerServices.Unsafe.dll" />
+        <File Id="System.ValueTuple.dll" Source="$(var.TargetDir)net462\System.ValueTuple.dll" />
+        <File Id="System.Numerics.Vectors.dll" Source="$(var.TargetDir)net462\System.Numerics.Vectors.dll" />
+        <File Id="System.Runtime.InteropServices.RuntimeInformation.dll" Source="$(var.TargetDir)net462\System.Runtime.InteropServices.RuntimeInformation.dll" />
 
         <!-- https://stackoverflow.com/a/29769228/7585517 -->
-        <RegistryKey Root="HKCU"
-                     Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">
+        <RegistryKey Root="HKCU" Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this file" />
           <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;" />
           <RegistryKey Key="command">
@@ -52,8 +36,7 @@
           </RegistryKey>
         </RegistryKey>
 
-        <RegistryKey Root="HKCU"
-                     Key="Software\Classes\Directory\shell\ShowWhatProcessLocksFile">
+        <RegistryKey Root="HKCU" Key="Software\Classes\Directory\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this folder" />
           <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;" />
           <RegistryKey Key="command">

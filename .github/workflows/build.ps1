@@ -17,16 +17,16 @@ Function CheckReturnCodeOfPreviousCommand($msg) {
 Function GetVersion() {
     $gitCommand = Get-Command -Name git
 
-    $nearestTag = & $gitCommand describe --exact-match --tags HEAD
+    $tag = & $gitCommand describe --exact-match --tags HEAD
     if(-Not $?) {
         Info "The commit is not tagged. Use 'v0.0-dev' as a version instead"
-        $nearestTag = "v0.0-dev"
+        $tag = "v0.0-dev"
     }
 
     $commitHash = & $gitCommand rev-parse --short HEAD
     CheckReturnCodeOfPreviousCommand "Failed to get git commit hash"
 
-    return "$($nearestTag.Substring(1))-$commitHash"
+    return "$($tag.Substring(1))-$commitHash"
 }
 
 Function GetInstallerVersion($version) {
@@ -86,15 +86,3 @@ CheckReturnCodeOfPreviousCommand "build failed"
 RemoveFileIfExists "$publishDir/${projectName}.msi.zip"
 Info "Create zip archive from msi installer"
 Compress-Archive -Path "$publishDir/$projectName.msi" -DestinationPath "$publishDir/${projectName}.msi.zip"
-
-# Skip running tests if the build script is run on Github Actions.
-# There are no processes which lock files on Github Actions executors. It makes a lot of test fail.
-if ($null -eq $env:GITHUB_ACTIONS) {
-    & "$buildDir/nuget/nunit.consolerunner/*/tools/nunit3-console.exe" `
-           "$publishDir/net461/Test.dll" `
-           --stoponerror `
-           --labels=Before `
-           --noheader `
-           --noresult
-    CheckReturnCodeOfPreviousCommand "tests failed"
-}

@@ -1,24 +1,25 @@
-namespace ShowWhatProcessLocksFile.Gui.Controls
+using ShowWhatProcessLocksFile.Gui.Utils;
+
+namespace ShowWhatProcessLocksFile.Gui.Controls;
+
+internal class ResultTextViewModel : ViewModelBase
 {
-    internal class ResultTextViewModel : ViewModelBase
+    public string Text { get; }
+    public bool Success { get; }
+
+    private ResultTextViewModel(string text, bool success)
     {
-        public string Text { get; }
-        public bool Success { get; }
+        Text = text;
+        Success = success;
+    }
 
-        private ResultTextViewModel(string text, bool success)
-        {
-            Text = text;
-            Success = success;
-        }
+    public static ResultTextViewModel Error(string text)
+    {
+        return new ResultTextViewModel(text, false);
+    }
 
-        public static ResultTextViewModel Error(string text)
-        {
-            return new ResultTextViewModel(text, success: false);
-        }
-
-        public static ResultTextViewModel Info(string text)
-        {
-            return new ResultTextViewModel(text, success: true);
-        }
+    public static ResultTextViewModel Info(string text)
+    {
+        return new ResultTextViewModel(text, true);
     }
 }

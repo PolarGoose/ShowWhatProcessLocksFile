@@ -1,15 +1,13 @@
+using ShowWhatProcessLocksFile.Gui.Utils;
 
+namespace ShowWhatProcessLocksFile.Gui.Controls;
 
-namespace ShowWhatProcessLocksFile.Gui.Controls
+internal class ProgressBarWithTextViewModel : ViewModelBase
 {
-    internal class ProgressBarWithTextViewModel : ViewModelBase
+    public string Text { get; }
+
+    public ProgressBarWithTextViewModel(string text)
     {
-        public string Text { get; }
-
-        public ProgressBarWithTextViewModel(string text)
-        {
-            Text = text;
-        }
-
+        Text = text;
     }
 }

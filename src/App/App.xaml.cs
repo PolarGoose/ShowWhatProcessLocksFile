@@ -1,8 +1,7 @@
 using System.Windows;
 
-namespace ShowWhatProcessLocksFile
+namespace ShowWhatProcessLocksFile;
+
+public partial class App : Application
 {
-    public partial class App : Application
-    {
-    }
 }
