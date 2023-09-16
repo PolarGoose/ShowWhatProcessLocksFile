@@ -2,8 +2,8 @@
     <PropertyGroup>
         <ProjectRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</ProjectRoot>
         <BuildFolder>$(ProjectRoot)build\</BuildFolder>
-        <OutputPath>$(BuildFolder)$(Configuration)</OutputPath>
-        <BaseIntermediateOutputPath>$(BuildFolder)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+        <OutputPath>$(BuildFolder)$(Configuration)\$(MSBuildProjectName)</OutputPath>
+        <BaseIntermediateOutputPath>$(BuildFolder)obj\$(MSBuildProjectName)\$(Configuration)\</BaseIntermediateOutputPath>
         <Platforms>x64</Platforms>
         <WarningLevel>5</WarningLevel>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

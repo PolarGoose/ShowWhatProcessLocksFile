@@ -11,9 +11,11 @@ namespace ShowWhatProcessLocksFile.Gui;
 
 internal class MainWindowViewModel : ViewModelBase
 {
-    public string Title => $"{AssemblyInfo.ProgramName} {AssemblyInfo.InformationalVersion}";
+    public string Title => $"""{AssemblyInfo.ProgramName} {AssemblyInfo.InformationalVersion}{(Elevation.IsUserAnAdmin() ? " (Admin)" : "")}""";
 
     public RelayCommand RefreshCommand { get; }
+
+    public RelayCommand RestartAsAdministratorCommand { get; }
 
     public string FilePath { get; }
 
@@ -22,7 +24,7 @@ internal class MainWindowViewModel : ViewModelBase
     public ViewModelBase MainControl
     {
         get => mainControl;
-        set
+        private set
         {
             mainControl = value;
             OnPropertyChanged();
@@ -34,16 +36,23 @@ internal class MainWindowViewModel : ViewModelBase
     {
         FilePath = filePath;
         RefreshCommand = new RelayCommand(GetLockingInformation, () => mainControl is not ProgressBarWithTextViewModel);
+        RestartAsAdministratorCommand = new RelayCommand(RestartAsAdministrator, () => !Elevation.IsUserAnAdmin());
+
         GetLockingInformation();
     }
 
-    public async void GetLockingInformation()
+    private void RestartAsAdministrator()
+    {
+        Elevation.RestartAsAdmin(FilePath);
+    }
+
+    private async void GetLockingInformation()
     {
         MainControl = new ProgressBarWithTextViewModel("Getting locking information");
 
         try
         {
-            var res = await LockFinder.FindWhatProcessesLockPath(FilePath);
+            var res = await Task.Run(() => LockFinder.FindWhatProcessesLockPath(FilePath).ToList());
             MainControl = res.Any()
                 ? new ProcessInfoListViewModel(res, OnProcessesKillRequested)
                 : ResultTextViewModel.Info("Nothing locks this file");
@@ -54,7 +63,7 @@ internal class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public async void OnProcessesKillRequested(IEnumerable<ProcessInfo> processesToKill)
+    private async void OnProcessesKillRequested(IEnumerable<ProcessInfo> processesToKill)
     {
         MainControl = new ProgressBarWithTextViewModel("Killing processes");
 

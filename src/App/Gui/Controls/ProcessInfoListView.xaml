@@ -20,8 +20,10 @@
                     Content="{StaticResource CollapseAll_icon}" ToolTip="Collapse All" />
         </StackPanel>
 
-        <ListBox x:Name="processInfoList" Grid.Row="1" SelectionMode="Extended"
-                 ItemsSource="{Binding ProcessInfoViewModels}" ScrollViewer.CanContentScroll="False">
+        <ListBox Grid.Row="1"
+                 SelectionMode="Extended"
+                 ItemsSource="{Binding ProcessInfoViewModels}"
+                 ScrollViewer.CanContentScroll="False">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <local:ProcessInfoView DataContext="{Binding}" />

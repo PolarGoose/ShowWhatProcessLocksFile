@@ -46,7 +46,7 @@ internal static class CommandLineParser
         }
     }
 
-    public static bool IsUncPath(this string path)
+    private static bool IsUncPath(this string path)
     {
         return path.StartsWith(@"\\");
     }

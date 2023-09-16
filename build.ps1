@@ -61,9 +61,9 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
-$root = Resolve-Path "$PSScriptRoot/../.."
+$root = Resolve-Path "$PSScriptRoot"
 $buildDir = "$root/build"
-$publishDir = "$buildDir/Release"
+$publishDir = "$buildDir/Release/Installer"
 $projectName = "ShowWhatProcessLocksFile"
 $version = GetVersion
 $installerVersion = GetInstallerVersion $version

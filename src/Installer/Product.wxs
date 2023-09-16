@@ -1,5 +1,11 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Package Name="ShowWhatProcessLocksFile" Language="1033" Version="$(var.InstallerVersion)" Manufacturer="PolarGoose" UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb" InstallerVersion="200" Scope="perUser">
+  <Package Name="ShowWhatProcessLocksFile"
+           Language="1033"
+           Version="$(var.InstallerVersion)"
+           Manufacturer="PolarGoose"
+           UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb"
+           InstallerVersion="200"
+           Scope="perUser">
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="ShowWhatProcessLocksFile" Level="1">
@@ -14,18 +20,17 @@
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent" Guid="18A44A77-A0C6-4CE7-9CE5-88ECBEF62B14">
-        <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.TargetDir)net462\ShowWhatProcessLocksFile.exe" />
-        <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.TargetDir)net462\ShowWhatProcessLocksFile.exe.config" />
-        <File Id="Handle2.exe" Source="$(var.TargetDir)net462\Handle2.exe" />
-        <File Id="CliWrap.dll" Source="$(var.TargetDir)net462\CliWrap.dll" />
-        <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.TargetDir)net462\Microsoft.Bcl.AsyncInterfaces.dll" />
-        <File Id="System.Memory.dll" Source="$(var.TargetDir)net462\System.Memory.dll" />
-        <File Id="System.Buffers.dll" Source="$(var.TargetDir)net462\System.Buffers.dll" />
-        <File Id="System.Threading.Tasks.Extensions.dll" Source="$(var.TargetDir)net462\System.Threading.Tasks.Extensions.dll" />
-        <File Id="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.TargetDir)net462\System.Runtime.CompilerServices.Unsafe.dll" />
-        <File Id="System.ValueTuple.dll" Source="$(var.TargetDir)net462\System.ValueTuple.dll" />
-        <File Id="System.Numerics.Vectors.dll" Source="$(var.TargetDir)net462\System.Numerics.Vectors.dll" />
-        <File Id="System.Runtime.InteropServices.RuntimeInformation.dll" Source="$(var.TargetDir)net462\System.Runtime.InteropServices.RuntimeInformation.dll" />
+        <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe" />
+        <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe.config" />
+        <File Id="handle64_v5.0_Unicode.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\handle64_v5.0_Unicode.exe" />
+        <File Id="CliWrap.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\CliWrap.dll" />
+        <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\Microsoft.Bcl.AsyncInterfaces.dll" />
+        <File Id="System.Memory.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Memory.dll" />
+        <File Id="System.Buffers.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Buffers.dll" />
+        <File Id="System.Threading.Tasks.Extensions.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Threading.Tasks.Extensions.dll" />
+        <File Id="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Runtime.CompilerServices.Unsafe.dll" />
+        <File Id="System.ValueTuple.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.ValueTuple.dll" />
+        <File Id="System.Numerics.Vectors.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Numerics.Vectors.dll" />
 
         <!-- https://stackoverflow.com/a/29769228/7585517 -->
         <RegistryKey Root="HKCU" Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">

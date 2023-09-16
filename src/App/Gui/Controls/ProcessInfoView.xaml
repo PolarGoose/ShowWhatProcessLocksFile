@@ -28,13 +28,16 @@
         <Image Grid.Column="1" Grid.Row="0" Source="{Binding Process.Icon}" Height="32" Width="32" Margin="5" />
 
         <TextBlock Grid.Column="2" Grid.Row="0" Margin="5" FontSize="12">
-            <Run FontWeight="Bold" Text="{Binding Process.Name, Mode=OneWay}" /> <LineBreak />
+            <Run FontWeight="Bold" Text="{Binding Process.ProcessName, Mode=OneWay}" /> <LineBreak />
             Pid: <Run Text="{Binding Process.Pid, Mode=OneWay}" />,
-            <Run Text="{Binding Process.ExecutableFullName, Mode=OneWay}" />
+            User: <Run Text="{Binding Process.UserNameWithDomain, Mode=OneWay}" />,
+            <Run Text="{Binding Process.ProcessExecutableFullName, Mode=OneWay}" />
         </TextBlock>
 
-        <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="LockedFiles"
-                      ItemsSource="{Binding Process.LockedFiles}"
+        <ItemsControl Grid.Row="1"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      ItemsSource="{Binding Process.LockedPath}"
                       Visibility="{Binding IsExpanded, Converter={StaticResource BooleanToCollapsedVisibilityConverter}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

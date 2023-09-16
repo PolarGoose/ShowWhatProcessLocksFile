@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShowWhatProcessLocksFile.Gui"
+        xmlns:utils="clr-namespace:ShowWhatProcessLocksFile.Gui.Utils"
         xmlns:controls="clr-namespace:ShowWhatProcessLocksFile.Gui.Controls"
         mc:Ignorable="d"
         x:Name="self"
         Title="{Binding Title}" Height="450" Width="800"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}">
+    <Window.Resources>
+        <utils:BooleanToCollapsedVisibilityConverter x:Key="BooleanToCollapsedVisibilityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -19,12 +23,20 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
             <TextBox Margin="2" Grid.Column="0" IsReadOnly="True" Text="{Binding FilePath, Mode=OneWay}" FontSize="14"
                      Padding="0,2,0,2" />
-            <Button Grid.Column="1" Margin="2" Command="{Binding RefreshCommand}"
-                    Content="{StaticResource Refresh_icon}" ToolTip="Refresh" />
+            <Button Grid.Column="1" Margin="2"
+                    Command="{Binding RefreshCommand}"
+                    Content="{StaticResource Refresh_icon}"
+                    ToolTip="Refresh" />
+            <Button Grid.Column="2" Margin="2"
+                    Command="{Binding RestartAsAdministratorCommand}"
+                    Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToCollapsedVisibilityConverter}}"
+                    Content="{StaticResource UacShield_icon}"
+                    ToolTip="Restart as administrator" />
         </Grid>
 
         <ContentControl Grid.Row="1" Content="{Binding MainControl}">

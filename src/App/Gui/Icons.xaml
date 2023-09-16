@@ -174,6 +174,36 @@
         </Rectangle>
     </Viewbox>
 
+    <!-- UacShield.xaml -->
+    <Viewbox x:Key="UacShield_icon" Width="16 " Height="16" x:Shared="false" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib">
+        <Rectangle Width="16 " Height="16">
+            <Rectangle.Resources>
+                <SolidColorBrush x:Key="canvas" Opacity="0" />
+                <SolidColorBrush x:Key="light-defaultgrey" Color="#212121" Opacity="1" />
+                <SolidColorBrush x:Key="white" Color="#ffffff" Opacity="1" />
+                <SolidColorBrush x:Key="light-blue" Color="#005dba" Opacity="1" />
+                <SolidColorBrush x:Key="light-yellow" Color="#996f00" Opacity="1" />
+            </Rectangle.Resources>
+            <Rectangle.Fill>
+                <DrawingBrush Stretch="None">
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup x:Name="canvas">
+                                <GeometryDrawing Brush="{DynamicResource canvas}" Geometry="F1M16,16H0V0H16Z" />
+                            </DrawingGroup>
+                            <DrawingGroup x:Name="level_1">
+                                <GeometryDrawing Brush="{DynamicResource light-defaultgrey}" Geometry="F1M8.3,15.953l-.055.016H7.8l-.054-.016C1.629,14.2.721,7.37,1.093,4l.06-.534L8.021.031l6.868,3.437L14.948,4C15.321,7.37,14.413,14.2,8.3,15.953Z" />
+                                <GeometryDrawing Brush="{DynamicResource white}" Geometry="F1M13.838,7.583c-.05.326-.112.658-.19,1H8.521v6.308a2.013,2.013,0,0,1-.5.172,1.531,1.531,0,0,1-.5-.172V8.583H2.394c-.078-.342-.141-.674-.19-1H7.521V1.315l.5-.252.5.252V7.583Z" />
+                                <GeometryDrawing Brush="{DynamicResource light-blue}" Geometry="F1M13.648,8.583a8.189,8.189,0,0,1-5.127,6.291V8.583ZM8.521,14.875h0c-.169.061-.321.137-.5.189C8.2,15.011,8.352,14.936,8.521,14.875ZM7.516,1.317,2.07,4.062a15.31,15.31,0,0,0,.137,3.521H7.521V3.094h0ZM2.205,7.589h0V7.583h0Z" />
+                                <GeometryDrawing Brush="{DynamicResource light-yellow}" Geometry="F1M7.521,14.874c.169.061.32.137.5.189-.179-.052-.331-.112-.5-.172ZM2.394,8.583a8.186,8.186,0,0,0,5.127,6.291V8.583ZM13.972,4.062,8.516,1.312h.005V7.583h5.314A15.31,15.31,0,0,0,13.972,4.062Z" />
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Viewbox>
+    
     <!-- StatusError.xaml -->
     <Viewbox x:Key="StatusError_icon" x:Shared="false" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
         <Rectangle Width="16 " Height="16">

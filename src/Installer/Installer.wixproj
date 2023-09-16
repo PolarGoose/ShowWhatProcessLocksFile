@@ -1,4 +1,4 @@
-<Project Sdk="WixToolset.Sdk/4.0.0-rc.2">
+<Project Sdk="WixToolset.Sdk/4.0.1">
   <PropertyGroup>
     <OutputName>ShowWhatProcessLocksFile</OutputName>
     <SuppressValidation>True</SuppressValidation>

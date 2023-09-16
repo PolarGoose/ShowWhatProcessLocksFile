@@ -5,15 +5,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
-      - run: .github/workflows/build.ps1
+      - run: .\build.ps1
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          files: Build/Release/*.msi.zip
+          files: Build/Release/Installer/*.msi.zip
       - uses: actions/upload-artifact@v3
         with:
           name: Build artifacts
-          path: Build/Release/*.msi.zip
+          path: Build/Release/Installer/*.msi.zip
