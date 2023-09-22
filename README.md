@@ -1,7 +1,8 @@
 # ShowWhatProcessLocksFile
 A simple clone of [PowerToys File Locksmith](https://learn.microsoft.com/en-us/windows/powertoys/file-locksmith) utility to discover what processes lock a specific file or folder that has the following advantages:
 * Supports older versions of Windows
-* Lightweight
+* Doesn't require admin rights to be installed
+* Much more lightweight
 
 # Screenshots
 ## Context menu
@@ -11,7 +12,7 @@ A simple clone of [PowerToys File Locksmith](https://learn.microsoft.com/en-us/w
 <img src="doc/Screenshot.png" width="70%" height="70%"/>
 
 # System requirements
-* Windows 8 x64 or higher (you might need to install [.Net Framework 4.6.2](https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-web-installer))
+* Windows 7 x64 or higher (you might need to install [.Net Framework 4.6.2](https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-web-installer))
 
 # How it works
 The application uses [Sysinternals Handle](https://learn.microsoft.com/en-us/sysinternals/downloads/handle) from the [Sysinternals-console-utils-with-Unicode-support](https://github.com/PolarGoose/Sysinternals-console-utils-with-Unicode-support) to get information about locking processes.
