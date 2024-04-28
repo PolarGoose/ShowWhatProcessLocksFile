@@ -1,18 +1,17 @@
-using System;
 using System.IO;
 
 namespace ShowWhatProcessLocksFile.LockFinding.Utils;
 
 public static class PathUtils
 {
-    public static string RemoveTrailingPathSeparator(string path)
+    public static string ToCanonicalPath(string fileOrFolderPath)
     {
-        path = Path.GetFullPath(path);
-        return path.TrimEnd('\\');
-    }
+        var p = Path.GetFullPath(fileOrFolderPath);
+        if (!p.EndsWith('\\') && Directory.Exists(p))
+        {
+            p += '\\';
+        }
 
-    public static bool IsInsideFolder(string path, string folder)
-    {
-        return path.StartsWith($@"{RemoveTrailingPathSeparator(folder)}\", StringComparison.InvariantCultureIgnoreCase);
+        return p;
     }
 }

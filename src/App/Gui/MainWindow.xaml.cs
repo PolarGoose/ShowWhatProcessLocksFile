@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using ShowWhatProcessLocksFile.Gui.Utils;
 using ShowWhatProcessLocksFile.Utils;

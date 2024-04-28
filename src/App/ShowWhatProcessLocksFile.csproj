@@ -1,33 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net462</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Icon\icon.ico</ApplicationIcon>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="3.6.4" />
-    <PackageReference Include="PolySharp" Version="1.13.2">
+    <PackageReference Include="Polyfill" Version="5.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="PolySharp" Version="1.14.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
+    <Reference Include="Microsoft.VisualBasic"/>
+    <Reference Include="System.Web"/>
+    <Reference Include="System.Web.Extensions"/>
   </ItemGroup>
-
-  <!-- Download handle.exe and unpack it -->
-  <Target Name="DownloadHandleExe" BeforeTargets="BeforeBuild" Condition="!Exists('$(BuildFolder)handle.zip')">
-    <Message Text="Download Handle2 from the web" />
-    <Exec Command="PowerShell -NonInteractive -ExecutionPolicy Unrestricted -Command ^&#xA; &quot; Invoke-WebRequest -Uri https://github.com/PolarGoose/Sysinternals-console-utils-with-Unicode-support/releases/download/v1.0/Sysinternals.Du.AccessChk.Handle.with.Unicode.support.zip -OutFile '$(BuildFolder)handle.zip' &quot;" />
-  </Target>
-  <Target Name="UnpackHandleExe" AfterTargets="DownloadHandleExe" BeforeTargets="BeforeBuild" Condition="!Exists('$(OutDir)handle64_v5.0_Unicode.exe')">
-    <Message Text="Unpack handle.zip" />
-    <Exec Command="PowerShell -NonInteractive -ExecutionPolicy Unrestricted -Command ^&#xA; &quot; Expand-Archive -Force '$(BuildFolder)handle.zip' '$(OutDir)' &quot;" />
-  </Target>
 </Project>

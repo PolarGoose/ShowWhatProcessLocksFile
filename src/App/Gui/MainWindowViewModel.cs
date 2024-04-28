@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ShowWhatProcessLocksFile.Gui.Controls;
 using ShowWhatProcessLocksFile.Gui.Utils;
 using ShowWhatProcessLocksFile.LockFinding;
@@ -11,7 +7,7 @@ namespace ShowWhatProcessLocksFile.Gui;
 
 internal class MainWindowViewModel : ViewModelBase
 {
-    public string Title => $"""{AssemblyInfo.ProgramName} {AssemblyInfo.InformationalVersion}{(Elevation.IsUserAnAdmin() ? " (Admin)" : "")}""";
+    public string Title => $"{AssemblyInfo.ProgramName} {AssemblyInfo.InformationalVersion}{(Elevation.IsUserAnAdmin() ? " (Admin)" : "")}";
 
     public RelayCommand RefreshCommand { get; }
 

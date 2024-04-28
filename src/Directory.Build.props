@@ -5,9 +5,11 @@
         <OutputPath>$(BuildFolder)$(Configuration)\$(MSBuildProjectName)</OutputPath>
         <BaseIntermediateOutputPath>$(BuildFolder)obj\$(MSBuildProjectName)\$(Configuration)\</BaseIntermediateOutputPath>
         <Platforms>x64</Platforms>
+        <ImplicitUsings>enable</ImplicitUsings>
         <WarningLevel>5</WarningLevel>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <Version>0.0-dev</Version>
         <InstallerVersion>0.0</InstallerVersion>
+        <TargetFramework>net462</TargetFramework>
     </PropertyGroup>
 </Project>

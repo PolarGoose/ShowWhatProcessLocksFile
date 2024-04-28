@@ -3,9 +3,9 @@ using ShowWhatProcessLocksFile.LockFinding;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls;
 
-internal class ProcessInfoViewModel : ViewModelBase
+internal class ProcessInfoViewModel(ProcessInfo process) : ViewModelBase
 {
-    public ProcessInfo Process { get; }
+    public ProcessInfo Process { get; } = process;
 
     private bool isExpanded;
 
@@ -17,10 +17,5 @@ internal class ProcessInfoViewModel : ViewModelBase
             isExpanded = value;
             OnPropertyChanged();
         }
-    }
-
-    public ProcessInfoViewModel(ProcessInfo process)
-    {
-        Process = process;
     }
 }

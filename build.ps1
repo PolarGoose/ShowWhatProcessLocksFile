@@ -17,7 +17,7 @@ Function CheckReturnCodeOfPreviousCommand($msg) {
 Function GetVersion() {
     $gitCommand = Get-Command -Name git
 
-    $tag = & $gitCommand describe --exact-match --tags HEAD
+    try { $tag = & $gitCommand describe --exact-match --tags HEAD } catch { }
     if(-Not $?) {
         Info "The commit is not tagged. Use 'v0.0-dev' as a version instead"
         $tag = "v0.0-dev"
@@ -74,14 +74,21 @@ Info "Version: '$version'. InstallerVersion: '$installerVersion'"
 Info "Build project"
 & $msbuild `
     /property:RestorePackagesConfig=true `
-    /property:MSBuildWarningsAsMessages=NU1503 `
     /property:Configuration=Release `
     /property:DebugType=None `
     /property:Version=$version `
     /property:InstallerVersion=$installerVersion `
+    /verbosity:Minimal `
     /target:"restore;build" `
     $root/$projectName.sln
 CheckReturnCodeOfPreviousCommand "build failed"
+
+Info "Run tests"
+dotnet test `
+  --no-build `
+  --configuration Release `
+  $root/$projectName.sln
+CheckReturnCodeOfPreviousCommand "tests failed"
 
 RemoveFileIfExists "$publishDir/${projectName}.msi.zip"
 Info "Create zip archive from msi installer"

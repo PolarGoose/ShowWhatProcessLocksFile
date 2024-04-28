@@ -6,46 +6,38 @@
            UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb"
            InstallerVersion="200"
            Scope="perUser">
-    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-    <MediaTemplate EmbedCab="yes" />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed."/>
+    <MediaTemplate EmbedCab="yes"/>
     <Feature Id="ProductFeature" Title="ShowWhatProcessLocksFile" Level="1">
-      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ProductComponents"/>
     </Feature>
   </Package>
   <Fragment>
     <StandardDirectory Id="AppDataFolder">
-      <Directory Id="INSTALLFOLDER" Name="ShowWhatProcessLocksFile" />
+      <Directory Id="INSTALLFOLDER" Name="ShowWhatProcessLocksFile"/>
     </StandardDirectory>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent" Guid="18A44A77-A0C6-4CE7-9CE5-88ECBEF62B14">
-        <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe" />
-        <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe.config" />
-        <File Id="handle64_v5.0_Unicode.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\handle64_v5.0_Unicode.exe" />
-        <File Id="CliWrap.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\CliWrap.dll" />
-        <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\Microsoft.Bcl.AsyncInterfaces.dll" />
-        <File Id="System.Memory.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Memory.dll" />
-        <File Id="System.Buffers.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Buffers.dll" />
-        <File Id="System.Threading.Tasks.Extensions.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Threading.Tasks.Extensions.dll" />
-        <File Id="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Runtime.CompilerServices.Unsafe.dll" />
-        <File Id="System.ValueTuple.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.ValueTuple.dll" />
-        <File Id="System.Numerics.Vectors.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.Numerics.Vectors.dll" />
+        <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe"/>
+        <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe.config"/>
+        <File Id="System.ValueTuple.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.ValueTuple.dll"/>
 
         <!-- https://stackoverflow.com/a/29769228/7585517 -->
         <RegistryKey Root="HKCU" Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">
-          <RegistryValue Type="string" Value="Show what locks this file" />
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;" />
+          <RegistryValue Type="string" Value="Show what locks this file"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;"/>
           <RegistryKey Key="command">
-              <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
         </RegistryKey>
 
         <RegistryKey Root="HKCU" Key="Software\Classes\Directory\shell\ShowWhatProcessLocksFile">
-          <RegistryValue Type="string" Value="Show what locks this folder" />
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;" />
+          <RegistryValue Type="string" Value="Show what locks this folder"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;"/>
           <RegistryKey Key="command">
-              <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;" />
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
         </RegistryKey>
       </Component>

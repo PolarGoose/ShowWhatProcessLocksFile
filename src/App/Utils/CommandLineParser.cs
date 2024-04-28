@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace ShowWhatProcessLocksFile.Utils;
@@ -19,17 +18,11 @@ internal static class CommandLineParser
             throw new Exception($"Wrong number of commandline arguments. {args}");
         }
 
-        if (IsUncPath(args[1]))
-        {
-            throw new Exception($"UNC paths are not supported:\n{args[1]}");
-        }
-
         if (!Exists(args[1]))
         {
             throw new Exception($"'{args[1]}' doesn't exist");
         }
 
-        Log.Info($"File path is provided: {args[1]}");
         return args[1];
     }
 
@@ -44,10 +37,5 @@ internal static class CommandLineParser
         {
             return false;
         }
-    }
-
-    private static bool IsUncPath(this string path)
-    {
-        return path.StartsWith(@"\\");
     }
 }
