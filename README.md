@@ -20,7 +20,7 @@ A simple clone of [PowerToys File Locksmith](https://learn.microsoft.com/en-us/w
 
 ## System requirements
 
-* Windows 7 x64 or higher (you might need to install [.Net Framework 4.6.2](https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net462-web-installer))
+* Windows 7 x64 or higher (you might need to install `.Net Framework 4.7.2`)
 
 ## How to use
 

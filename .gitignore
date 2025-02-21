@@ -1,4 +1,4 @@
-/Build/
-/.vs/
-/.idea/
+/build/
+.vs/
+.idea/
 launchSettings.json

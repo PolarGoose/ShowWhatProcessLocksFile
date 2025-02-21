@@ -16,7 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{A8406D94
 		build.ps1 = build.ps1
 		src\Directory.Build.props = src\Directory.Build.props
 		.github\workflows\main.yaml = .github\workflows\main.yaml
-		nuget.config = nuget.config
 		README.md = README.md
 	EndProjectSection
 EndProject

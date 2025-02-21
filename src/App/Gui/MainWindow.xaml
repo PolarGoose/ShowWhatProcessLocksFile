@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:ShowWhatProcessLocksFile.Gui.Controls"
         mc:Ignorable="d"
         x:Name="Self"
-        Title="{Binding Title}" Height="450" Width="800"
+        Title="{Binding Title}" Height="600" Width="1200"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <utils:BooleanToCollapsedVisibilityConverter x:Key="BooleanToCollapsedVisibilityConverter" />

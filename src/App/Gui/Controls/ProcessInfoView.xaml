@@ -41,7 +41,7 @@
                       Visibility="{Binding IsExpanded, Converter={StaticResource BooleanToCollapsedVisibilityConverter}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="20, 2, 2, 2" Text="{Binding}" />
+                  <TextBlock Margin="20, 2, 2, 2" Text="{Binding}" FontFamily="Consolas"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

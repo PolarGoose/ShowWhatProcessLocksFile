@@ -1,11 +1,10 @@
-using System.IO;
+using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
 using System.Text;
-using Microsoft.Win32.SafeHandles;
 
 namespace ShowWhatProcessLocksFile.LockFinding.Interop;
 
-public static class WinApi
+public class WinApi
 {
     [Flags]
     private enum StandardAccessRights : long
@@ -36,6 +35,13 @@ public static class WinApi
         PROCESS_SUSPEND_RESUME = 0x0800,
         PROCESS_QUERY_LIMITED_INFORMATION = 0x1000,
         PROCESS_SET_LIMITED_INFORMATION = 0x2000
+    }
+
+    [Flags]
+    private enum DuplicateObjectOptions : uint
+    {
+        DUPLICATE_CLOSE_SOURCE = 0x00000001,
+        DUPLICATE_SAME_ACCESS = 0x00000002
     }
 
     [DllImport("kernel32.dll", SetLastError = true)]
@@ -84,7 +90,7 @@ public static class WinApi
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     private static extern int GetFinalPathNameByHandleW(SafeFileHandle hFile, [Out] StringBuilder filePathBuffer, int filePathBufferSize, int flags);
 
-    public static string GetFinalPathNameByHandle(SafeFileHandle hFile)
+    public static string? GetFinalPathNameByHandle(SafeFileHandle hFile)
     {
         var buf = new StringBuilder();
         var result = GetFinalPathNameByHandleW(hFile, buf, buf.Capacity, 0);
@@ -113,6 +119,18 @@ public static class WinApi
     [DllImport("advapi32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool OpenProcessToken(SafeProcessHandle processHandle, TokenAccessRights desiredAccess, out SafeFileHandle tokenHandle);
+
+    public enum FileType : uint
+    {
+        FILE_TYPE_UNKNOWN = 0x0000,
+        FILE_TYPE_DISK = 0x0001,
+        FILE_TYPE_CHAR = 0x0002,
+        FILE_TYPE_PIPE = 0x0003,
+        FILE_TYPE_REMOTE = 0x8000
+    }
+
+    [DllImport("Kernel32.dll", SetLastError = true)]
+    public static extern FileType GetFileType(SafeFileHandle hFile);
 
     [Flags]
     public enum FileDesiredAccess : uint
@@ -152,10 +170,18 @@ public static class WinApi
         SecurityAnonymous = 0x00100000
     }
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    public static extern SafeFileHandle ReOpenFile(
-        SafeFileHandle hOriginalFile,
-        FileDesiredAccess dwDesiredAccess,
-        FileShare dwShareMode,
-        FileFlagsAndAttributes dwFlagsAndAttributes);
+    public const int ERROR_INSUFFICIENT_BUFFER = 122;
+
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    public static extern bool QueryFullProcessImageName(
+        SafeProcessHandle hProcess,
+        int dwFlags,
+        StringBuilder? lpExeName,
+        ref int lpdwSize);
+
+    [DllImport("psapi.dll", SetLastError = true)]
+    public static extern bool EnumProcessModules(SafeProcessHandle hProcess, IntPtr[] lphModule, int cb, out int lpcbNeeded);
+
+    [DllImport("psapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    public static extern uint GetModuleFileNameEx(SafeProcessHandle hProcess, IntPtr hModule, [Out] StringBuilder lpFilename, int nSize);
 }

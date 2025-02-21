@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows.Media;
+using Microsoft.Win32.SafeHandles;
 using ShowWhatProcessLocksFile.LockFinding.Interop;
 using ShowWhatProcessLocksFile.LockFinding.Utils;
 
@@ -7,10 +8,10 @@ namespace ShowWhatProcessLocksFile.LockFinding;
 
 public record struct ProcessInfo(
     int Pid,
-    string ProcessName,
-    string ProcessExecutableFullName,
-    string DomainAndUserName,
-    ImageSource Icon,
+    string? ProcessName,
+    string? ProcessExecutableFullName,
+    string? DomainAndUserName,
+    ImageSource? Icon,
     List<string> LockedFileFullNames);
 
 public static class LockFinder
@@ -21,59 +22,89 @@ public static class LockFinder
         var currentProcess = WinApi.GetCurrentProcess();
         var result = new List<ProcessInfo>();
 
-        foreach (var pidAndHandles in NtDll.QuerySystemHandleInformation().GroupBy(h => h.UniqueProcessId))
+        var processes = NtDll.QuerySystemHandleInformation().GroupBy(h => h.UniqueProcessId).Select(processAndHandles => (processAndHandles.Key, processAndHandles.ToArray())).ToArray();
+        var currentProcessIndex = 0;
+        var currentHandleIndex = 0;
+        SafeProcessHandle? currentOpenedProcess = null;
+        var currentLockedFiles = new List<string>();
+        SafeFileHandle? currentDupHandle = null;
+
+        while (currentProcessIndex < processes.Length)
         {
-            var (pid, handles) = (pidAndHandles.Key, pidAndHandles);
-
-            using var openedProcess = WinApi.OpenProcess(WinApi.ProcessAccessRights.PROCESS_DUP_HANDLE | WinApi.ProcessAccessRights.PROCESS_QUERY_INFORMATION, false, pid);
-            if (openedProcess.IsInvalid)
+            new WorkerThreadWithDeadLockDetection(TimeSpan.FromMilliseconds(50), watchdog =>
             {
-                continue;
-            }
-
-            var processInfo = new ProcessInfo
-            {
-                Pid = (int)pid.ToUInt64(),
-                LockedFileFullNames = []
-            };
-
-            foreach (var h in handles)
-            {
-                using var dupHandle = WinApi.DuplicateHandle(currentProcess, openedProcess, h);
-                if (dupHandle.IsInvalid)
+                while (currentProcessIndex < processes.Length)
                 {
-                    continue;
-                }
+                    var (pid, handles) = processes[currentProcessIndex];
 
-                using var reopenedHandle = WinApi.ReOpenFile(dupHandle, WinApi.FileDesiredAccess.None, FileShare.None, WinApi.FileFlagsAndAttributes.None);
-                if (reopenedHandle.IsInvalid)
-                {
-                    continue;
-                }
-
-                var fileOrFolderFullName = WinApi.GetFinalPathNameByHandle(reopenedHandle);
-                if (fileOrFolderFullName?.StartsWith(path, StringComparison.InvariantCultureIgnoreCase) == true)
-                {
-                    processInfo.LockedFileFullNames.Add(fileOrFolderFullName);
-                }
-            }
-
-            if (processInfo.LockedFileFullNames.Any())
-            {
-                processInfo.DomainAndUserName = ProcessUtils.GetOwnerDomainAndUserNames(openedProcess);
-                var process = ProcessUtils.GetProcess((int)pid.ToUInt64());
-                if (process != null)
-                {
-                    processInfo.ProcessExecutableFullName = ProcessUtils.GetExecutablePath(process);
-                    processInfo.ProcessName = Path.GetFileName(processInfo.ProcessExecutableFullName);
-                    if (processInfo.ProcessExecutableFullName != null)
+                    if (currentOpenedProcess is null)
                     {
-                        processInfo.Icon = ProcessUtils.GetIcon(processInfo.ProcessExecutableFullName);
-                    }
-                }
+                        currentOpenedProcess = ProcessUtils.OpenProcessToDuplicateHandle(pid);
+                        if (currentOpenedProcess is null)
+                        {
+                            currentProcessIndex++;
+                            continue;
+                        }
 
-                result.Add(processInfo);
-            }
+                        currentLockedFiles = new List<string>();
+                        currentHandleIndex = 0;
+                    }
+
+                    while (currentHandleIndex < handles.Length)
+                    {
+                        currentDupHandle?.Dispose();
+                        var h = handles[currentHandleIndex];
+                        currentHandleIndex++;
+
+                        currentDupHandle = WinApi.DuplicateHandle(currentProcess, currentOpenedProcess, h);
+                        if (currentDupHandle.IsInvalid)
+                        {
+                            continue;
+                        }
+
+                        watchdog.Arm();
+                        var lockedFileName = WinApi.GetFinalPathNameByHandle(currentDupHandle);
+                        watchdog.Disarm();
+                        if (lockedFileName is null)
+                        {
+                            continue;
+                        }
+
+                        lockedFileName = PathUtils.AddTrailingSeparatorIfItIsAFolder(lockedFileName);
+                        if (lockedFileName?.StartsWith(path, StringComparison.InvariantCultureIgnoreCase) == true)
+                        {
+                            currentLockedFiles.Add(lockedFileName);
+                        }
+                    }
+
+                    var moduleNames = ProcessUtils.GetProcessModules(currentOpenedProcess)
+                                                  .Where(name => name.StartsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+                    if (currentLockedFiles.Any() || moduleNames.Any())
+                    {
+                        var processInfo = new ProcessInfo
+                        {
+                            Pid = (int)pid.ToUInt64(),
+                            LockedFileFullNames = currentLockedFiles.Concat(moduleNames).Distinct().OrderBy(s => s, StringComparer.OrdinalIgnoreCase).ToList(),
+                            DomainAndUserName = ProcessUtils.GetOwnerDomainAndUserName(currentOpenedProcess),
+                            ProcessExecutableFullName = ProcessUtils.GetProcessExeFullName(currentOpenedProcess),
+                        };
+
+                        if (processInfo.ProcessExecutableFullName != null)
+                        {
+                            processInfo.ProcessName = Path.GetFileName(processInfo.ProcessExecutableFullName);
+                            processInfo.Icon = ProcessUtils.GetIcon(processInfo.ProcessExecutableFullName);
+                        }
+
+                        result.Add(processInfo);
+                    }
+
+                    currentDupHandle?.Dispose();
+                    currentOpenedProcess.Dispose();
+                    currentOpenedProcess = null;
+                    currentProcessIndex++;
+                }
+            }).Run();
         }
 
         return result;

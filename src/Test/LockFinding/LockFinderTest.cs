@@ -5,6 +5,7 @@ using ShowWhatProcessLocksFile.LockFinding;
 namespace Test.LockFinding;
 
 [TestFixture]
+[Parallelizable(scope: ParallelScope.All)]
 public class LockFinderTest
 {
     [TestCase(@"C:\PathThatDoesNotExist")]
@@ -29,7 +30,17 @@ public class LockFinderTest
         {
             @"C:\Windows\en-US\explorer.exe.mui",
             @"C:\Windows\en-US\explorer.exe.mUi",
-            @"C:\Windows\Fonts\StaticCache.dat"
+            @"C:\Windows\Fonts\StaticCache.dat",
+            @"C:\Windows\System32\",
+            @"C:\WINDOWS\SYSTEM32\ntdll.dll"
+        })]
+    [TestCase(
+        @"C:\Windows\System32",
+        "explorer.exe",
+        new[]
+        {
+            @"C:\Windows\System32\",
+            @"C:\WINDOWS\SYSTEM32\ntdll.dll"
         })]
     [TestCase(
         @"C:\windows",
@@ -49,8 +60,7 @@ public class LockFinderTest
             @"C:\Windows\en-US\explorer.exe.mUi",
             @"C:\Windows\Fonts\StaticCache.dat"
         })]
-    public void If_path_is_locked_Returns_information_about_processes_that_lock_this_path(string path,
-        string processName, IEnumerable<string> pathThatShouldBeLocked)
+    public void If_path_is_locked_Returns_information_about_processes_that_lock_this_path(string path, string processName, IEnumerable<string> pathThatShouldBeLocked)
     {
         var processes = LockFinder.FindWhatProcessesLockPath(path).ToList();
 
@@ -62,6 +72,9 @@ public class LockFinderTest
         {
             AssertLocksPath(info, p);
         }
+
+        Assert.That(info.Icon, Is.Not.Null);
+        Assert.That(info.ProcessExecutableFullName, Is.Not.Null);
     }
 
     [Test]
@@ -74,7 +87,7 @@ public class LockFinderTest
         }
     }
 
-    private static ProcessInfo AssertContainsProcessInfo(IEnumerable<ProcessInfo> processes, Predicate<ProcessInfo> condition, string errorMessage = null)
+    private static ProcessInfo AssertContainsProcessInfo(IEnumerable<ProcessInfo> processes, Predicate<ProcessInfo> condition, string? errorMessage = null)
     {
         foreach (var proc in processes)
         {
@@ -84,7 +97,7 @@ public class LockFinderTest
             }
         }
 
-        throw new AssertionException(errorMessage);
+        throw new AssertionException(errorMessage!);
     }
 
     private static void AssertLocksPath(ProcessInfo process, string lockedPath)

@@ -11,9 +11,9 @@ public class RelayCommand : ICommand
     }
 
     private readonly Action methodToExecute;
-    private readonly Func<bool> canExecuteEvaluator;
+    private readonly Func<bool>? canExecuteEvaluator;
 
-    public RelayCommand(Action methodToExecute, Func<bool> canExecuteEvaluator = null)
+    public RelayCommand(Action methodToExecute, Func<bool>? canExecuteEvaluator = null)
     {
         this.methodToExecute = methodToExecute;
         this.canExecuteEvaluator = canExecuteEvaluator;
@@ -44,9 +44,9 @@ public class RelayCommand<T> : ICommand
     }
 
     private readonly Action<T> methodToExecute;
-    private readonly Predicate<T> canExecuteEvaluator;
+    private readonly Predicate<T>? canExecuteEvaluator;
 
-    public RelayCommand(Action<T> methodToExecute, Predicate<T> canExecuteEvaluator = null)
+    public RelayCommand(Action<T> methodToExecute, Predicate<T>? canExecuteEvaluator = null)
     {
         this.methodToExecute = methodToExecute;
         this.canExecuteEvaluator = canExecuteEvaluator;

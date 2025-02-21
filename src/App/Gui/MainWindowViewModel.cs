@@ -15,9 +15,9 @@ internal class MainWindowViewModel : ViewModelBase
 
     public string FilePath { get; }
 
-    private ViewModelBase mainControl;
+    private ViewModelBase? mainControl;
 
-    public ViewModelBase MainControl
+    public ViewModelBase? MainControl
     {
         get => mainControl;
         private set
