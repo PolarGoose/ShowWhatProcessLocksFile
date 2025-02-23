@@ -23,11 +23,12 @@
         <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe"/>
         <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe.config"/>
         <File Id="System.ValueTuple.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.ValueTuple.dll"/>
+        <File Id="icon.ico" Source="$(var.ShowWhatProcessLocksFile.ProjectDir)\Icon\icon.ico"/>
 
         <!-- https://stackoverflow.com/a/29769228/7585517 -->
         <RegistryKey Root="HKCU" Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this file"/>
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
           <RegistryKey Key="command">
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
@@ -35,7 +36,7 @@
 
         <RegistryKey Root="HKCU" Key="Software\Classes\Directory\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this folder"/>
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
           <RegistryKey Key="command">
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
