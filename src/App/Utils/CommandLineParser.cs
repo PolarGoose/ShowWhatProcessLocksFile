@@ -23,7 +23,7 @@ internal static class CommandLineParser
             throw new Exception($"'{args[1]}' doesn't exist");
         }
 
-        return args[1];
+        return args[1].Replace("\\", "/");
     }
 
     private static bool Exists(string path)
