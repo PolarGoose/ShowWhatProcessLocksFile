@@ -2,3 +2,4 @@
 .vs/
 .idea/
 launchSettings.json
+*.user

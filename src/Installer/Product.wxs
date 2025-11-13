@@ -22,7 +22,6 @@
       <Component Id="ProductComponent" Guid="18A44A77-A0C6-4CE7-9CE5-88ECBEF62B14">
         <File Id="ShowWhatProcessLocksFile.exe" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe"/>
         <File Id="ShowWhatProcessLocksFile.exe.config" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe.config"/>
-        <File Id="System.ValueTuple.dll" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\System.ValueTuple.dll"/>
         <File Id="icon.ico" Source="$(var.ShowWhatProcessLocksFile.ProjectDir)\Icon\icon.ico"/>
 
         <!-- https://stackoverflow.com/a/29769228/7585517 -->
@@ -39,6 +38,14 @@
           <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
           <RegistryKey Key="command">
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
+          </RegistryKey>
+        </RegistryKey>
+
+        <RegistryKey Root="HKCU" Key="Software\Classes\Drive\shell\ShowWhatProcessLocksFile">
+          <RegistryValue Type="string" Value="Show what locks this drive"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
+          <RegistryKey Key="command">
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; %1"/>
           </RegistryKey>
         </RegistryKey>
       </Component>

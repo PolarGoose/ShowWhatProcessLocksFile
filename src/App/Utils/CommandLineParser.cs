@@ -30,10 +30,9 @@ internal static class CommandLineParser
     {
         try
         {
-            _ = File.GetAttributes(path);
-            return true;
+            return File.Exists(path) || Directory.Exists(path);
         }
-        catch
+        catch (Exception)
         {
             return false;
         }

@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Test" />
-    <PackageReference Include="Polyfill" Version="7.17.0">
+    <PackageReference Include="Polyfill" Version="8.9.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -16,7 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.6.1" />
   </ItemGroup>
 
   <ItemGroup>

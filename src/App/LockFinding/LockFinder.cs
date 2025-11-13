@@ -71,14 +71,16 @@ public static class LockFinder
                         }
 
                         lockedFileName = PathUtils.AddTrailingSeparatorIfItIsAFolder(lockedFileName);
-                        if (lockedFileName?.StartsWith(path, StringComparison.InvariantCultureIgnoreCase) == true)
+                        if (path.EndsWith('\\') && lockedFileName.StartsWith(path, StringComparison.InvariantCultureIgnoreCase)
+                            || string.Equals(lockedFileName, path, StringComparison.InvariantCultureIgnoreCase))
                         {
                             currentLockedFiles.Add(lockedFileName);
                         }
                     }
 
                     var moduleNames = ProcessUtils.GetProcessModules(currentOpenedProcess)
-                                                  .Where(name => name.StartsWith(path, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                                                  .Where(name => path.EndsWith('\\') && name.StartsWith(path, StringComparison.InvariantCultureIgnoreCase)
+                                                                 || string.Equals(name, path, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
                     if (currentLockedFiles.Any() || moduleNames.Any())
                     {

@@ -10,7 +10,7 @@ public class LockFinderTest
 {
     [TestCase(@"C:\PathThatDoesNotExist")]
     [TestCase(@"C:\Windows\system.ini")] // existing but not locked path
-    public void Returns_empty_list_If_path_does_mot_exist_or_not_locked(string path)
+    public void Returns_empty_list_If_path_does_not_exist_or_not_locked(string path)
     {
         var processes = LockFinder.FindWhatProcessesLockPath(path);
         ClassicAssert.IsEmpty(processes);
@@ -53,6 +53,38 @@ public class LockFinderTest
         })]
     [TestCase(
         @"C:/windows",
+        "exploRer.exe",
+        new[]
+        {
+            @"C:\Windows\en-US\explorer.exe.mui",
+            @"C:\Windows\en-US\explorer.exe.mUi",
+            @"C:\Windows\Fonts\StaticCache.dat"
+        })]
+    [TestCase(
+        @"C:\WINDOWS\SYSTEM32\ntdll.dll",
+        "explorer.exe",
+        new[]
+        {
+            @"C:\WINDOWS\SYSTEM32\ntdll.dll"
+        })]
+    [TestCase(
+        @"C:\Windows\en-US\explorer.exe.mui",
+        "explorer.exe",
+        new[]
+        {
+            @"C:\Windows\en-US\explorer.exe.mui"
+        })]
+    [TestCase(
+        @"C:\",
+        "exploRer.exe",
+        new[]
+        {
+            @"C:\Windows\en-US\explorer.exe.mui",
+            @"C:\Windows\en-US\explorer.exe.mUi",
+            @"C:\Windows\Fonts\StaticCache.dat"
+        })]
+    [TestCase(
+        @"C:/",
         "exploRer.exe",
         new[]
         {

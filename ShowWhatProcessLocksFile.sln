@@ -1,13 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33205.214
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowWhatProcessLocksFile", "src\App\ShowWhatProcessLocksFile.csproj", "{952F82E5-8372-4435-8318-3ED0C114A57C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "src\Test\Test.csproj", "{19D889E7-E728-4BFF-A68E-5445454F4417}"
-EndProject
-Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "Installer", "src\Installer\Installer.wixproj", "{8D8AB22B-5677-4A21-B25F-75F2409248EC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{A8406D94-94FD-4135-875A-1A0FF1E54DC5}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -18,6 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{A8406D94
 		.github\workflows\main.yaml = .github\workflows\main.yaml
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowWhatProcessLocksFile", "src\App\ShowWhatProcessLocksFile.csproj", "{952F82E5-8372-4435-8318-3ED0C114A57C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "src\Test\Test.csproj", "{19D889E7-E728-4BFF-A68E-5445454F4417}"
+EndProject
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "Installer", "src\Installer\Installer.wixproj", "{8D8AB22B-5677-4A21-B25F-75F2409248EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
