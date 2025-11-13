@@ -41,6 +41,14 @@
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
         </RegistryKey>
+
+        <RegistryKey Root="HKCU" Key="Software\Classes\Drive\shell\ShowWhatProcessLocksFile">
+          <RegistryValue Type="string" Value="Show what locks this drive"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
+          <RegistryKey Key="command">
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; %1"/>
+          </RegistryKey>
+        </RegistryKey>
       </Component>
     </ComponentGroup>
   </Fragment>
