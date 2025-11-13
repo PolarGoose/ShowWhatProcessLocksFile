@@ -1,4 +1,5 @@
 using System.IO;
+using ShowWhatProcessLocksFile.LockFinding.Utils;
 
 namespace ShowWhatProcessLocksFile.Utils;
 
@@ -23,7 +24,7 @@ internal static class CommandLineParser
             throw new Exception($"'{args[1]}' doesn't exist");
         }
 
-        return args[1];
+        return PathUtils.ToCanonicalPath(args[1]);
     }
 
     private static bool Exists(string path)

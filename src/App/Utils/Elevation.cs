@@ -9,6 +9,9 @@ internal static class Elevation
 {
     public static void RestartAsAdmin(string path)
     {
+        // some of `\` signs can be interpreted as escape sequences.
+        path = path.Replace("\\", "/");
+
         new Process
         {
             StartInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().Location, $"\"{path}\"")
