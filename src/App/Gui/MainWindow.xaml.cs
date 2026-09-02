@@ -1,4 +1,5 @@
 using System.Windows;
+using ShowWhatProcessLocksFile.Gui.Theme;
 using ShowWhatProcessLocksFile.Gui.Utils;
 using ShowWhatProcessLocksFile.Utils;
 
@@ -9,6 +10,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        ThemeManager.Attach(this);
 
         try
         {

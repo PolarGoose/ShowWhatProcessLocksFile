@@ -8,6 +8,7 @@ A simple clone of [PowerToys File Locksmith](https://learn.microsoft.com/en-us/w
 * Supports older versions of Windows
 * Doesn't require admin rights
 * Also shows locks on network shares and mounted drives
+* Follows the Windows light/dark app mode
 
 ## Screenshots
 

@@ -6,14 +6,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Gui/Icons.xaml" />
+                <ResourceDictionary Source="/Gui/Theme/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="ButtonStyle" TargetType="ButtonBase">
-                <Style.Setters>
-                    <Setter Property="Background" Value="White" />
-                </Style.Setters>
-            </Style>
-            <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
-            <Style TargetType="ToggleButton" BasedOn="{StaticResource ButtonStyle}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
