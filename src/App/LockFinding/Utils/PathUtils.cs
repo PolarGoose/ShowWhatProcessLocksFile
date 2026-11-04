@@ -14,8 +14,8 @@ internal static class MappedDriveResolver
     // Converts a path like "Z:\folder\file.txt" to its UNC path like "\\server\share\folder\file.txt" if Z: is a mapped network drive.
     public static string ResolveToUncPathIfNetworkDrivePath(string path)
     {
-        var root = System.IO.Path.GetPathRoot(path);
-        string drive = root.Substring(0, 2); // "Z:"
+        var root = Path.GetPathRoot(path);
+        string drive = root!.Substring(0, 2); // "Z:"
 
         string? uncRoot = GetUncRootForDrive(drive);
         if (uncRoot is null)

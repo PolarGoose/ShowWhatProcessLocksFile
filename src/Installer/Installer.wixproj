@@ -1,13 +1,14 @@
-<Project Sdk="WixToolset.Sdk/6.0.2">
+﻿<Project Sdk="WixToolset.Sdk/7.0.1">
   <PropertyGroup>
     <OutputName>ShowWhatProcessLocksFile</OutputName>
     <SuppressValidation>True</SuppressValidation>
+    <AcceptEula>wix7</AcceptEula>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <DefineConstants>InstallerVersion=$(InstallerVersion)</DefineConstants>
+    <DefineConstants>$(DefineConstants);InstallerVersion=$(InstallerVersion)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\App\ShowWhatProcessLocksFile.csproj"/>

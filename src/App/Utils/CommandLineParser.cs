@@ -1,30 +1,27 @@
-using System.IO;
 using ShowWhatProcessLocksFile.LockFinding.Utils;
 
 namespace ShowWhatProcessLocksFile.Utils;
 
 internal static class CommandLineParser
 {
-    public static CanonicalPath GetFileFullName()
+    public static CanonicalPath GetFileFullName(string[] args)
     {
-        var args = Environment.GetCommandLineArgs();
-
-        if (args.Length == 1)
+        if (args.Length == 0)
         {
-            throw new Exception("Please provide full path to file or folder as a command line argument");
+            ErrorDialog.Show("Please provide full path to file or folder as a command line argument");
         }
 
-        if (args.Length > 2)
+        if (args.Length > 1)
         {
-            throw new Exception($"Wrong number of commandline arguments. {args}");
+            ErrorDialog.Show("Please provide exactly one file or folder path as a command line argument");
         }
 
-        if (!Exists(args[1]))
+        if (!Exists(args[0]))
         {
-            throw new Exception($"'{args[1]}' doesn't exist");
+            ErrorDialog.Show($"'{args[0]}' doesn't exist");
         }
 
-        return new CanonicalPath(args[1]);
+        return new CanonicalPath(args[0]);
     }
 
     private static bool Exists(string path)

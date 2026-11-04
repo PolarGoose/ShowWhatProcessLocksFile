@@ -5,7 +5,7 @@
   <Folder Name="/Files/">
     <File Path=".editorconfig" />
     <File Path=".gitattributes" />
-    <File Path=".github/workflows/main.yaml" />
+    <File Path=".github/workflows/CI.yaml" />
     <File Path=".gitignore" />
     <File Path="build.ps1" />
     <File Path="README.md" />
@@ -14,7 +14,9 @@
   <Project Path="src/App/ShowWhatProcessLocksFile.csproj">
     <Platform Project="x64" />
   </Project>
-  <Project Path="src/Installer/Installer.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0" />
+  <Project Path="src/Installer/Installer.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0">
+    <Build Project="false" />
+  </Project>
   <Project Path="src/Test/Test.csproj">
     <Platform Project="x64" />
   </Project>

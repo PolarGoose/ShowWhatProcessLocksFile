@@ -1,41 +1,29 @@
 Function Info($msg) {
-    Write-Host -ForegroundColor DarkGreen "`nINFO: $msg`n"
+  Write-Host -ForegroundColor DarkGreen "`nINFO: $msg`n"
 }
 
 Function Error($msg) {
-    Write-Host `n`n
-    Write-Error $msg
-    exit 1
+  Write-Host -ForegroundColor Red "`n`nERROR: $msg"
+  exit 1
 }
 
 Function CheckReturnCodeOfPreviousCommand($msg) {
-    if(-Not $?) {
-        Error "${msg}. Error code: $LastExitCode"
-    }
+  if(-Not $?) {
+    Error "${msg}. Error code: $LastExitCode"
+  }
 }
 
 Function GetVersion() {
-    $gitCommand = Get-Command -Name git
-
-    try { $tag = & $gitCommand describe --exact-match --tags HEAD 2> $null } catch { }
-    if(-Not $?) {
-        Info "The commit is not tagged. Use 'v0.0-dev' as a version instead"
-        $tag = "v0.0-dev"
-    }
-
-    $commitHash = & $gitCommand rev-parse --short HEAD
-    CheckReturnCodeOfPreviousCommand "Failed to get git commit hash"
-
-    return "$($tag.Substring(1))-$commitHash"
+  try { $commitTag = git describe --exact-match --tags HEAD 2> $null } catch { }
+  if(-Not $?) {
+    Info "The commit is not tagged. Use 'v0.0-dev' as a tag instead"
+    $commitTag = "v0.0-dev"
+  }
+  return "$($commitTag.Substring(1))"
 }
 
 Function GetInstallerVersion($version) {
-    return $version.Split("-")[0];
-}
-
-Function RemoveFileIfExists($fileName) {
-    Info "Remove '$fileName'"
-    Remove-Item $fileName  -Force  -Recurse -ErrorAction SilentlyContinue
+  return $version.Split("-")[0];
 }
 
 Set-StrictMode -Version Latest
@@ -44,32 +32,42 @@ $ProgressPreference = "SilentlyContinue"
 
 $root = Resolve-Path "$PSScriptRoot"
 $buildDir = "$root/build"
-$publishDir = "$buildDir/Release/Installer"
 $version = GetVersion
 $installerVersion = GetInstallerVersion $version
 
 Info "Version: '$version'. InstallerVersion: '$installerVersion'"
 
-Info "Build project"
-dotnet build `
-  --nologo `
-  --configuration Release `
-  -verbosity:minimal `
-  /property:DebugType=None `
-  /property:Version=$version `
-  /property:InstallerVersion=$installerVersion `
-  $root/ShowWhatProcessLocksFile.slnx
-CheckReturnCodeOfPreviousCommand "build failed"
-
 Info "Run tests"
-dotnet test `
-  --nologo `
-  --no-build `
-  --configuration Release `
-  -verbosity:minimal `
-  --logger:"console;verbosity=normal" `
-  $root/ShowWhatProcessLocksFile.slnx
+dotnet test --nologo `
+            --configuration Release `
+            -verbosity:minimal `
+            --logger:"console;verbosity=normal" `
+            $root/src/Test/Test.csproj
 CheckReturnCodeOfPreviousCommand "tests failed"
 
+Info "Publish"
+dotnet publish --nologo `
+               --configuration Release `
+               --runtime win-x64 `
+               -verbosity:minimal `
+               /property:Platform=x64 `
+               /property:PublishAot=true `
+               /property:PublishTrimmed=true `
+               /property:TrimMode=full `
+               /property:DebugType=None `
+               /property:Version=$version `
+               $root/src/App/ShowWhatProcessLocksFile.csproj
+CheckReturnCodeOfPreviousCommand "publish failed"
+
+Info "Build installer"
+dotnet build --nologo `
+             --configuration Release `
+             -verbosity:minimal `
+             /property:Platform=x64 `
+             /property:DebugType=None `
+             /property:InstallerVersion=$installerVersion `
+             $root/src/Installer/Installer.wixproj
+CheckReturnCodeOfPreviousCommand "installer build failed"
+
 Info "Create zip archive from msi installer"
-Compress-Archive -Force -Path "$publishDir/ShowWhatProcessLocksFile.msi" -DestinationPath "$publishDir/ShowWhatProcessLocksFile.msi.zip"
+Compress-Archive -Force -Path "$buildDir/x64/Release/Installer/ShowWhatProcessLocksFile.msi" -DestinationPath "$buildDir/ShowWhatProcessLocksFile.zip"

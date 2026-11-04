@@ -1,58 +1,70 @@
+using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ShowWhatProcessLocksFile.Gui.Controls;
-using ShowWhatProcessLocksFile.Gui.Utils;
 using ShowWhatProcessLocksFile.LockFinding;
 using ShowWhatProcessLocksFile.LockFinding.Utils;
 using ShowWhatProcessLocksFile.Utils;
 
 namespace ShowWhatProcessLocksFile.Gui;
 
-internal class MainWindowViewModel : ViewModelBase
+internal sealed partial class MainWindowViewModel : ObservableObject
 {
-    public string Title => $"{AssemblyInfo.ProgramName} {AssemblyInfo.InformationalVersion}{(Elevation.IsUserAnAdmin() ? " (Admin)" : "")}";
+    public bool IsAdministrator { get; } = Elevation.IsUserAnAdmin();
+    public string Title => $"{AssemblyInfo.ProgramName} {AssemblyInfo.InformationalVersion}{(IsAdministrator ? " (Admin)" : "")}";
+    public CanonicalPath? FilePath { get; }
+    private ObservableObject? mainControl;
 
-    public RelayCommand RefreshCommand { get; }
-
-    public RelayCommand RestartAsAdministratorCommand { get; }
-
-    public CanonicalPath FilePath { get; }
-
-    private ViewModelBase? mainControl;
-
-    public ViewModelBase? MainControl
+    public ObservableObject? MainControl
     {
         get => mainControl;
         private set
         {
+            (mainControl as IDisposable)?.Dispose();
             mainControl = value;
             OnPropertyChanged();
-            RelayCommand.Refresh();
+            RefreshCommand.NotifyCanExecuteChanged();
         }
     }
 
     public MainWindowViewModel(CanonicalPath filePath)
     {
         FilePath = filePath;
-        RefreshCommand = new RelayCommand(GetLockingInformation, () => mainControl is not ProgressBarWithTextViewModel);
-        RestartAsAdministratorCommand = new RelayCommand(RestartAsAdministrator, () => !Elevation.IsUserAnAdmin());
-
-        GetLockingInformation();
+        _ = RefreshCommand.ExecuteAsync(null);
     }
 
+    private bool CanRestartAsAdministrator() => !IsAdministrator;
+
+    [RelayCommand(CanExecute = nameof(CanRestartAsAdministrator))]
     private void RestartAsAdministrator()
     {
-        Elevation.RestartAsAdmin(FilePath);
+        try
+        {
+            Elevation.RestartAsAdmin(FilePath!);
+        }
+        catch (Win32Exception ex) when (ex.NativeErrorCode == 1223)
+        {
+            // Cancelling the UAC prompt leaves the current window open.
+        }
+        catch (Exception ex)
+        {
+            MainControl = ResultTextViewModel.Error($"Failed to restart as administrator.\n{ex.Message}");
+        }
     }
 
-    private async void GetLockingInformation()
+    private bool CanRefresh() => MainControl is not ProgressBarWithTextViewModel;
+
+    [RelayCommand(CanExecute = nameof(CanRefresh))]
+    private async Task RefreshAsync()
     {
         MainControl = new ProgressBarWithTextViewModel("Getting locking information");
 
         try
         {
-            var res = await Task.Run(() => LockFinder.FindWhatProcessesLockPath(FilePath).ToList());
-            MainControl = res.Any()
-                ? new ProcessInfoListViewModel(res, OnProcessesKillRequested)
-                : ResultTextViewModel.Info("Nothing locks this file");
+            var result = await Task.Run(() => LockFinder.FindWhatProcessesLockPath(FilePath!).ToList());
+            MainControl = result.Count > 0
+                ? new ProcessInfoListViewModel(result, OnProcessesKillRequested)
+                : ResultTextViewModel.Info("Nothing locks this file or folder");
         }
         catch (Exception ex)
         {
@@ -71,8 +83,9 @@ internal class MainWindowViewModel : ViewModelBase
         catch (Exception ex)
         {
             MainControl = ResultTextViewModel.Error($"Failed to kill processes. Exception:\n{ex}");
+            return;
         }
 
-        GetLockingInformation();
+        await RefreshAsync();
     }
 }

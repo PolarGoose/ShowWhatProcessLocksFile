@@ -1,0 +1,27 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svg="using:Avalonia.Svg.Skia"
+             x:Class="ShowWhatProcessLocksFile.App"
+             RequestedThemeVariant="Default">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <x:String x:Key="IconCss">/* Use the original icon colors. */</x:String>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+          <x:String x:Key="IconCss">
+            [fill="#202020"] { fill: #dedede; }
+            [fill="#C50F1F"] { fill: #f14c4c; }
+          </x:String>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+  <Application.Styles>
+    <SimpleTheme />
+    <Style Selector="Window">
+      <Setter Property="svg:Svg.Css" Value="{DynamicResource IconCss}" />
+    </Style>
+  </Application.Styles>
+</Application>

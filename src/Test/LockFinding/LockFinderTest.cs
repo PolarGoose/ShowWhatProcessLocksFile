@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using Polyfills;
 using ShowWhatProcessLocksFile.LockFinding;
 using ShowWhatProcessLocksFile.LockFinding.Utils;
 using System.IO;
@@ -148,11 +147,11 @@ internal class LockFinderTest
             using (File.Create(uniqueTmpFileOnSharedDrive))
             {
                 var infos = LockFinder.FindWhatProcessesLockPath(new CanonicalPath(uniqueTmpFileOnSharedDrive)).ToList();
-                Assert.Greater(infos.Count, 0);
+                Assert.That(infos.Count, Is.GreaterThan(0));
                 AssertLocksPath(infos[0], uniqueTmpFileOnSharedDrive);
 
                 infos = LockFinder.FindWhatProcessesLockPath(new CanonicalPath(@"\\wsl.localhost\Ubuntu-24.04\var\tmp")).ToList();
-                Assert.Greater(infos.Count, 0);
+                Assert.That(infos.Count, Is.GreaterThan(0));
                 AssertLocksPath(infos[0], uniqueTmpFileOnSharedDrive);
             }
         }
@@ -173,7 +172,7 @@ internal class LockFinderTest
         var file = @"E:\test\test_doc.docx";
 
         var infos = LockFinder.FindWhatProcessesLockPath(new CanonicalPath(file)).ToList();
-        Assert.Greater(infos.Count, 0);
+        Assert.That(infos.Count, Is.GreaterThan(0));
         AssertLocksPath(infos[0], file);
     }
 

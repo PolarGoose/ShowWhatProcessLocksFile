@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:ShowWhatProcessLocksFile.Gui"
+        xmlns:controls="using:ShowWhatProcessLocksFile.Gui.Controls"
+        x:Class="ShowWhatProcessLocksFile.Gui.MainWindow"
+        x:DataType="local:MainWindowViewModel"
+        Title="{Binding Title}"
+        Icon="/Icon/icon.ico"
+        Width="1200" Height="600" MinWidth="650" MinHeight="300">
+  <Window.KeyBindings>
+    <KeyBinding Gesture="F5" Command="{Binding RefreshCommand}" />
+  </Window.KeyBindings>
+  <Window.DataTemplates>
+    <DataTemplate DataType="controls:ProcessInfoListViewModel">
+      <controls:ProcessInfoListView />
+    </DataTemplate>
+    <DataTemplate DataType="controls:ProgressBarWithTextViewModel">
+      <StackPanel Margin="16" Spacing="12">
+        <TextBlock Text="{Binding Text}" FontSize="16" />
+        <ProgressBar IsIndeterminate="True" />
+      </StackPanel>
+    </DataTemplate>
+    <DataTemplate DataType="controls:ResultTextViewModel">
+      <Grid ColumnDefinitions="Auto,*" Margin="16" ColumnSpacing="12">
+        <Panel Width="24" Height="24" VerticalAlignment="Top">
+          <Image Source="{SvgImage /Gui/Icons/Checkmark.svg}" IsVisible="{Binding Success}" />
+          <Image Source="{SvgImage /Gui/Icons/StatusError.svg}" IsVisible="{Binding !Success}" />
+        </Panel>
+        <SelectableTextBlock Grid.Column="1" Text="{Binding Text}" FontSize="16" TextWrapping="Wrap" />
+      </Grid>
+    </DataTemplate>
+  </Window.DataTemplates>
+  <Grid RowDefinitions="Auto,*" Margin="2" RowSpacing="2">
+    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="2">
+      <TextBox IsReadOnly="True" Text="{Binding FilePath.Path, Mode=OneWay}"
+               VerticalContentAlignment="Center" />
+      <Button Grid.Column="1" Command="{Binding RefreshCommand}"
+              ToolTip.Tip="Refresh (F5)">
+        <Image Source="{SvgImage /Gui/Icons/Refresh.svg}" Width="16" Height="16" />
+      </Button>
+      <Button Grid.Column="2" Command="{Binding RestartAsAdministratorCommand}"
+              IsVisible="{Binding !IsAdministrator}" ToolTip.Tip="Restart as administrator">
+        <Image Source="{SvgImage /Gui/Icons/UacShield.svg}" Width="16" Height="16" />
+      </Button>
+    </Grid>
+    <ContentControl Grid.Row="1" Content="{Binding MainControl}"
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+  </Grid>
+</Window>

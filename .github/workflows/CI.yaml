@@ -2,16 +2,19 @@ on: push
 
 jobs:
   build:
-    runs-on: windows-2025-vs2026
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
       - run: ./build.ps1
       - uses: softprops/action-gh-release@v3
         if: github.ref_type == 'tag'
         with:
           draft: true
-          files: Build/Release/Installer/*.msi.zip
+          files: build/ShowWhatProcessLocksFile.zip
       - uses: actions/upload-artifact@v7
         with:
           name: Build artifacts
-          path: Build/Release/Installer/*.msi.zip
+          path: build/ShowWhatProcessLocksFile.zip

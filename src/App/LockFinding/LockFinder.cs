@@ -1,5 +1,4 @@
 using System.IO;
-using System.Windows.Media;
 using Microsoft.Win32.SafeHandles;
 using ShowWhatProcessLocksFile.LockFinding.Interop;
 using ShowWhatProcessLocksFile.LockFinding.Utils;
@@ -11,7 +10,7 @@ public record struct ProcessInfo(
     string? ProcessName,
     string? ProcessExecutableFullName,
     string? DomainAndUserName,
-    ImageSource? Icon,
+    byte[]? Icon,
     List<string> LockedFileFullNames);
 
 internal static class LockFinder

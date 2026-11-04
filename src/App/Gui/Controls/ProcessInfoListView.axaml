@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:ShowWhatProcessLocksFile.Gui.Controls"
+             x:Class="ShowWhatProcessLocksFile.Gui.Controls.ProcessInfoListView"
+             x:DataType="local:ProcessInfoListViewModel">
+  <Grid RowDefinitions="Auto,*" RowSpacing="2">
+    <StackPanel Orientation="Horizontal" Spacing="2">
+      <Button Command="{Binding ExpandAll}" ToolTip.Tip="Expand all">
+        <Image Source="{SvgImage /Gui/Icons/ExpandAll.svg}" Width="16" Height="16" />
+      </Button>
+      <Button Command="{Binding CollapseAll}" ToolTip.Tip="Collapse all">
+        <Image Source="{SvgImage /Gui/Icons/CollapseAll.svg}" Width="16" Height="16" />
+      </Button>
+    </StackPanel>
+    <ListBox x:Name="Processes"
+             Grid.Row="1"
+             SelectionMode="Multiple"
+             ScrollViewer.AllowAutoHide="False"
+             ItemsSource="{Binding ProcessInfoViewModels}">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel />
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemContainerTheme>
+        <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+          <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+          <Setter Property="Padding" Value="0" />
+        </ControlTheme>
+      </ListBox.ItemContainerTheme>
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="local:ProcessInfoViewModel">
+          <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto,*" ColumnSpacing="10" Margin="4,6">
+            <ToggleButton IsChecked="{Binding IsExpanded, Mode=TwoWay}" VerticalAlignment="Center"
+                          ToolTip.Tip="Show or hide locked files">
+              <Panel Width="16" Height="16">
+                <Image Source="{SvgImage /Gui/Icons/ExpandRight.svg}" IsVisible="{Binding !IsExpanded}" />
+                <Image Source="{SvgImage /Gui/Icons/ExpandDown.svg}" IsVisible="{Binding IsExpanded}" />
+              </Panel>
+            </ToggleButton>
+            <Image Grid.Column="1" Source="{Binding Icon}" Width="32" Height="32" />
+            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+              <TextBlock Text="{Binding Process.ProcessName}" FontWeight="Bold" />
+              <TextBlock TextWrapping="Wrap">
+                <Run Text="{Binding Process.Pid, Mode=OneWay, StringFormat='PID: {0},'}" />
+                <Run Text="{Binding Process.DomainAndUserName, Mode=OneWay, StringFormat='User: {0},'}" />
+                <Run Text="{Binding Process.ProcessExecutableFullName, Mode=OneWay}" />
+              </TextBlock>
+            </StackPanel>
+            <ItemsControl Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Process.LockedFileFullNames}"
+                          IsVisible="{Binding IsExpanded}" Margin="0,4,0,0">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                  <SelectableTextBlock Text="{Binding}" FontFamily="Consolas" Margin="0,2" TextWrapping="Wrap" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+      <ListBox.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Terminate selected processes" Command="{Binding KillSelected}"
+                    CommandParameter="{Binding #Processes.SelectedItems}"
+                    IsEnabled="{Binding !!#Processes.SelectedItems.Count}" />
+        </ContextMenu>
+      </ListBox.ContextMenu>
+    </ListBox>
+  </Grid>
+</UserControl>

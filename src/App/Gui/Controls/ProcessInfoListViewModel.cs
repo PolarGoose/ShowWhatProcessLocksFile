@@ -1,40 +1,41 @@
 using System.Collections;
-using ShowWhatProcessLocksFile.Gui.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ShowWhatProcessLocksFile.LockFinding;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls;
 
-internal class ProcessInfoListViewModel : ViewModelBase
+internal sealed class ProcessInfoListViewModel(
+    IEnumerable<ProcessInfo> processes, Action<IEnumerable<ProcessInfo>> killProcessesRequested) : ObservableObject, IDisposable
 {
-    public IEnumerable<ProcessInfoViewModel> ProcessInfoViewModels { get; }
-    public RelayCommand ExpandAllCommand { get; }
-    public RelayCommand CollapseAllCommand { get; }
-    public RelayCommand<IEnumerable> KillSelected { get; }
+    public IReadOnlyList<ProcessInfoViewModel> ProcessInfoViewModels { get; } =
+        processes.Select(p => new ProcessInfoViewModel(p)).ToList();
 
-    public ProcessInfoListViewModel(IEnumerable<ProcessInfo> processesInfoViewModels,
-        Action<IEnumerable<ProcessInfo>> killProcessesRequested)
+    public void ExpandAll() => SetExpanded(true);
+
+    public void CollapseAll() => SetExpanded(false);
+
+    public void KillSelected(IEnumerable? selection)
     {
-        ProcessInfoViewModels = processesInfoViewModels.Select(p => new ProcessInfoViewModel(p)).ToList();
-
-        ExpandAllCommand = new RelayCommand(() =>
+        var selected = selection?.OfType<ProcessInfoViewModel>().Select(p => p.Process).ToArray() ?? [];
+        if (selected.Length > 0)
         {
-            foreach (var p in ProcessInfoViewModels)
-            {
-                p.IsExpanded = true;
-            }
-        });
+            killProcessesRequested(selected);
+        }
+    }
 
-        CollapseAllCommand = new RelayCommand(() =>
+    private void SetExpanded(bool expanded)
+    {
+        foreach (var process in ProcessInfoViewModels)
         {
-            foreach (var p in ProcessInfoViewModels)
-            {
-                p.IsExpanded = false;
-            }
-        });
+            process.IsExpanded = expanded;
+        }
+    }
 
-        KillSelected = new RelayCommand<IEnumerable>(processes =>
+    public void Dispose()
+    {
+        foreach (var process in ProcessInfoViewModels)
         {
-            killProcessesRequested(processes.OfType<ProcessInfoViewModel>().Select(p => p.Process));
-        });
+            process.Dispose();
+        }
     }
 }

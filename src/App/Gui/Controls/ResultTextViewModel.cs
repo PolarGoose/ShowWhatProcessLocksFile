@@ -1,8 +1,8 @@
-using ShowWhatProcessLocksFile.Gui.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls;
 
-internal class ResultTextViewModel : ViewModelBase
+internal class ResultTextViewModel : ObservableObject
 {
     public string Text { get; }
     public bool Success { get; }

@@ -5,9 +5,7 @@ namespace ShowWhatProcessLocksFile.Utils;
 internal static class AssemblyInfo
 {
     public static string InformationalVersion =>
-        Assembly.GetEntryAssembly()
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
+        typeof(AssemblyInfo).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
-    public static string ProgramName => Assembly.GetExecutingAssembly().GetName().Name;
+    public static string ProgramName => typeof(AssemblyInfo).Assembly.GetName().Name!;
 }

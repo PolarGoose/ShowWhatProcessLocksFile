@@ -1,11 +1,8 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Microsoft.Win32.SafeHandles;
 using ShowWhatProcessLocksFile.LockFinding.Interop;
 
@@ -117,15 +114,19 @@ internal static class ProcessUtils
         }
     }
 
-    public static ImageSource? GetIcon(string executableFullName)
+    public static byte[]? GetIcon(string executableFullName)
     {
         try
         {
             using var ico = Icon.ExtractAssociatedIcon(executableFullName);
-            var image = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            // We need to freeze the image, otherwise the GUI thread will not be able to use it if this function was called from another process
-            image.Freeze();
-            return image;
+            if (ico == null)
+            {
+                return null;
+            }
+            using var bitmap = ico.ToBitmap();
+            using var stream = new MemoryStream();
+            bitmap.Save(stream, ImageFormat.Png);
+            return stream.ToArray();
         }
         catch (Exception)
         {

@@ -1,11 +1,8 @@
-using System.Windows.Controls;
+using Avalonia.Controls;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls;
 
 public partial class ProcessInfoListView : UserControl
 {
-    public ProcessInfoListView()
-    {
-        InitializeComponent();
-    }
+    public ProcessInfoListView() => InitializeComponent();
 }

@@ -1,8 +1,8 @@
-using ShowWhatProcessLocksFile.Gui.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ShowWhatProcessLocksFile.Gui.Controls;
 
-internal class ProgressBarWithTextViewModel : ViewModelBase
+internal class ProgressBarWithTextViewModel : ObservableObject
 {
     public string Text { get; }
 

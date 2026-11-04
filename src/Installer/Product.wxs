@@ -21,15 +21,14 @@
   </Fragment>
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Files Include="$(var.ShowWhatProcessLocksFile.TargetDir)publish\*">
+        <Exclude Files="$(var.ShowWhatProcessLocksFile.TargetDir)publish\*.pdb"/>
+      </Files>
+      
       <Component Id="ProductComponent" Guid="18A44A77-A0C6-4CE7-9CE5-88ECBEF62B14">
-        <File Id="id1" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe"/>
-        <File Id="id2" Source="$(var.ShowWhatProcessLocksFile.TargetDir)\ShowWhatProcessLocksFile.exe.config"/>
-        <File Id="id3" Source="$(var.ShowWhatProcessLocksFile.ProjectDir)\Icon\icon.ico"/>
-
-        <!-- https://stackoverflow.com/a/29769228/7585517 -->
         <RegistryKey Root="HKCU" Key="Software\Classes\*\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this file"/>
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;,0"/>
           <RegistryKey Key="command">
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
@@ -37,7 +36,7 @@
 
         <RegistryKey Root="HKCU" Key="Software\Classes\Directory\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this folder"/>
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;,0"/>
           <RegistryKey Key="command">
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; &quot;%1&quot;"/>
           </RegistryKey>
@@ -45,7 +44,7 @@
 
         <RegistryKey Root="HKCU" Key="Software\Classes\Drive\shell\ShowWhatProcessLocksFile">
           <RegistryValue Type="string" Value="Show what locks this drive"/>
-          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]icon.ico&quot;"/>
+          <RegistryValue Type="string" Name="Icon" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot;,0"/>
           <RegistryKey Key="command">
             <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]ShowWhatProcessLocksFile.exe&quot; %1"/>
           </RegistryKey>

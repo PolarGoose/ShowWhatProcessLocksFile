@@ -172,7 +172,7 @@ internal static class NtDll
 
         try
         {
-            var name = (UNICODE_STRING)Marshal.PtrToStructure(buffer, typeof(UNICODE_STRING))!;
+            var name = Marshal.PtrToStructure<UNICODE_STRING>(buffer);
             return name.Length > 0 ? Marshal.PtrToStringUni(name.Buffer, name.Length / 2) : null;
         }
         finally
@@ -235,7 +235,7 @@ internal static class NtDll
 
         try
         {
-            var info = (OBJECT_TYPE_INFORMATION)Marshal.PtrToStructure(buffer, typeof(OBJECT_TYPE_INFORMATION))!;
+            var info = Marshal.PtrToStructure<OBJECT_TYPE_INFORMATION>(buffer);
             return info.Name.Length > 0 ? Marshal.PtrToStringUni(info.Name.Buffer, info.Name.Length / 2) : string.Empty;
         }
         finally
@@ -269,8 +269,8 @@ internal static class NtDll
         var numberOfHandles = handleInfo.NumberOfHandles.ToInt64();
         var handleEntries = new SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX[numberOfHandles];
 
-        long handleSize = Marshal.SizeOf(typeof(SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX));
-        var current = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(SYSTEM_HANDLE_INFORMATION_EX)) - handleSize);
+        long handleSize = Marshal.SizeOf<SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX>();
+        var current = new IntPtr(buffer.ToInt64() + Marshal.SizeOf<SYSTEM_HANDLE_INFORMATION_EX>() - handleSize);
 
         for (long i = 0; i < numberOfHandles; i++)
         {
