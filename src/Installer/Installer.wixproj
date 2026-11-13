@@ -4,7 +4,7 @@
     <SuppressValidation>True</SuppressValidation>
     <AcceptEula>wix7</AcceptEula>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineConstants>Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>

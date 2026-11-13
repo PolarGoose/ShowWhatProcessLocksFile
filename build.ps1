@@ -34,40 +34,48 @@ $root = Resolve-Path "$PSScriptRoot"
 $buildDir = "$root/build"
 $version = GetVersion
 $installerVersion = GetInstallerVersion $version
+$isArm64Host = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq 'Arm64'
 
 Info "Version: '$version'. InstallerVersion: '$installerVersion'"
 
-Info "Run tests"
-dotnet test --nologo `
-            --configuration Release `
-            -verbosity:minimal `
-            --logger:"console;verbosity=normal" `
-            $root/src/Test/Test.csproj
-CheckReturnCodeOfPreviousCommand "tests failed"
+foreach ($platform in @('x64', 'ARM64')) {
+  if ($platform -eq 'x64' -or $isArm64Host) {
+    Info "Run $platform tests"
+    dotnet test --nologo `
+                --configuration Release `
+                -verbosity:minimal `
+                /property:Platform=$platform `
+                --logger:"console;verbosity=normal" `
+                "$root/src/Test/Test.csproj"
+    CheckReturnCodeOfPreviousCommand "$platform tests failed"
+  }
 
-Info "Publish"
-dotnet publish --nologo `
+  $runtime = "win-$($platform.ToLowerInvariant())"
+
+  Info "Publish $platform Native AOT executable"
+  dotnet publish --nologo `
+                 --configuration Release `
+                 --runtime $runtime `
+                 -verbosity:minimal `
+                 /property:Platform=$platform `
+                 /property:PublishAot=true `
+                 /property:PublishTrimmed=true `
+                 /property:TrimMode=full `
+                 /property:DebugType=None `
+                 /property:Version=$version `
+                 "$root/src/App/ShowWhatProcessLocksFile.csproj"
+  CheckReturnCodeOfPreviousCommand "$platform publish failed"
+
+  Info "Build $platform installer"
+  dotnet build --nologo `
                --configuration Release `
-               --runtime win-x64 `
                -verbosity:minimal `
-               /property:Platform=x64 `
-               /property:PublishAot=true `
-               /property:PublishTrimmed=true `
-               /property:TrimMode=full `
+               /property:Platform=$platform `
                /property:DebugType=None `
-               /property:Version=$version `
-               $root/src/App/ShowWhatProcessLocksFile.csproj
-CheckReturnCodeOfPreviousCommand "publish failed"
+               /property:InstallerVersion=$installerVersion `
+               "$root/src/Installer/Installer.wixproj"
+  CheckReturnCodeOfPreviousCommand "$platform installer build failed"
 
-Info "Build installer"
-dotnet build --nologo `
-             --configuration Release `
-             -verbosity:minimal `
-             /property:Platform=x64 `
-             /property:DebugType=None `
-             /property:InstallerVersion=$installerVersion `
-             $root/src/Installer/Installer.wixproj
-CheckReturnCodeOfPreviousCommand "installer build failed"
-
-Info "Create zip archive from msi installer"
-Compress-Archive -Force -Path "$buildDir/x64/Release/Installer/ShowWhatProcessLocksFile.msi" -DestinationPath "$buildDir/ShowWhatProcessLocksFile.zip"
+  Info "Create $platform zip archive from msi installer"
+  Compress-Archive -Force -Path "$buildDir/$platform/Release/Installer/ShowWhatProcessLocksFile.msi" -DestinationPath "$buildDir/ShowWhatProcessLocksFile_$platform.zip"
+}

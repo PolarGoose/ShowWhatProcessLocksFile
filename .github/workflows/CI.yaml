@@ -2,19 +2,32 @@ on: push
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-11-arm
+    env:
+      DOTNET_ROOT_X64: C:\Program Files\dotnet\x64
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: '11.x'
+          check-latest: true
+          architecture: x64
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '11.x'
+          check-latest: true
+          architecture: arm64
       - run: ./build.ps1
       - uses: softprops/action-gh-release@v3
         if: github.ref_type == 'tag'
         with:
           draft: true
-          files: build/ShowWhatProcessLocksFile.zip
+          files: |
+            build/ShowWhatProcessLocksFile_x64.zip
+            build/ShowWhatProcessLocksFile_ARM64.zip
       - uses: actions/upload-artifact@v7
         with:
           name: Build artifacts
-          path: build/ShowWhatProcessLocksFile.zip
+          path: |
+            build/ShowWhatProcessLocksFile_x64.zip
+            build/ShowWhatProcessLocksFile_ARM64.zip

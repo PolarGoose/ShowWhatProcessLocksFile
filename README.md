@@ -17,7 +17,7 @@ A simple clone of the [PowerToys File Locksmith](https://learn.microsoft.com/en-
 <img src="doc/Screenshot.png" width="70%" height="70%"/>
 
 ## How to use
-* Download and install `ShowWhatProcessLocksFile.zip` from the latest [release](https://github.com/PolarGoose/ShowWhatProcessLocksFile/releases).
+* Download the installer from the latest [release](https://github.com/PolarGoose/ShowWhatProcessLocksFile/releases).
 * Use `Show what locks this file` in the `File Explorer` context menu to select a file or folder
 * To terminate a process, select it and open a context menu by clicking the right mouse button
 

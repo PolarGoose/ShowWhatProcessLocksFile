@@ -2,6 +2,8 @@
   <PropertyGroup>
     <ProjectRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</ProjectRoot>
     <BuildFolder>$(ProjectRoot)build\</BuildFolder>
+    <Platforms>x64;ARM64</Platforms>
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
     <OutputPath>$(BuildFolder)$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutputPath>
     <BaseIntermediateOutputPath>$(BuildFolder)obj\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</BaseIntermediateOutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -10,10 +12,9 @@
     <Version>0.0-dev</Version>
     <InstallerVersion>0.0</InstallerVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-    <Platforms>x64</Platforms>
-    <Platform Condition="'$(Platform)' == ''">x64</Platform>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <RuntimeIdentifier Condition="'$(Platform)' == 'x64'">win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(Platform)' == 'ARM64'">win-arm64</RuntimeIdentifier>
+    <TargetFramework>net11.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>

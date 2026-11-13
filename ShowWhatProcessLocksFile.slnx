@@ -1,6 +1,7 @@
 <Solution>
   <Configurations>
     <Platform Name="x64" />
+    <Platform Name="ARM64" />
   </Configurations>
   <Folder Name="/Files/">
     <File Path=".editorconfig" />
@@ -12,12 +13,16 @@
     <File Path="src/Directory.Build.props" />
   </Folder>
   <Project Path="src/App/ShowWhatProcessLocksFile.csproj">
-    <Platform Project="x64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|ARM64" Project="ARM64" />
   </Project>
   <Project Path="src/Installer/Installer.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0">
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|ARM64" Project="ARM64" />
     <Build Project="false" />
   </Project>
   <Project Path="src/Test/Test.csproj">
-    <Platform Project="x64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|ARM64" Project="ARM64" />
   </Project>
 </Solution>

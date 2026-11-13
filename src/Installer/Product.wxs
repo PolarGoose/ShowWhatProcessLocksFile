@@ -4,7 +4,7 @@
            Version="$(var.InstallerVersion)"
            Manufacturer="PolarGoose"
            UpgradeCode="ecbb21bf-5b26-4971-aac2-d3528a7f10fb"
-           InstallerVersion="200"
+           InstallerVersion="500"
            Scope="perUser">
     <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed."/>
     <MediaTemplate EmbedCab="yes"/>
